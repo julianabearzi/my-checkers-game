@@ -1,0 +1,132 @@
+:root {
+    --fuenteHeading: 'Quattrocento', serif;
+    --fuentePrincipal: 'Quattrocento Sans', sans-serif;
+
+    --brown: #784D3C;
+    --lightbrown: #ffeddf;
+    --gold: #D4AF37;
+    --white: #ffffff;
+    --black: #000;
+}
+html {
+    box-sizing: border-box;
+  }
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
+body {
+    font-family: var(--fuentePrincipal);
+    background-color: var(--lightbrown);
+   
+}
+a {
+    text-decoration: none;
+}
+
+#main-header {
+    background-color:var(--black);  
+    width: auto;
+    height: 55px;
+    padding-bottom: 60px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 100px;
+  padding-right: 50px;
+  height: 50px;
+  font-family: var(--fuenteHeading);
+  
+}
+.logo-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 20px;
+    gap: 0.5rem;
+}
+.logo-header__text {
+    color:var(--white);
+    font-size: 2.5rem;
+}
+.logo-header__image {
+   width: 40px;
+   height: 40px;
+}
+.navigation {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.6rem;
+}
+.navigation__link {
+    font-size: 1.5rem;
+    color: var(--white);
+}
+.container-game {
+      
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.checkers {
+    border-collapse: collapse;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+}
+.checkers__piece {
+    width: 54px;
+    height: 54px;
+    padding-top: 5px;
+   padding-left: 5px;
+}
+.checkers tr:nth-child(odd) td:nth-child(even){
+    background-color:var(--brown);
+}
+
+.checkers tr:nth-child(even) td:nth-child(even){
+      background-color: #dfc6b2;
+}
+.checkers tr:nth-child(odd) td:nth-child(odd){
+      background-color: #dfc6b2;
+}
+.checkers tr:nth-child(even) td:nth-child(odd){
+    background-color: var(--brown);
+}
+
+.btn-container {
+    margin-top: 4rem;
+    padding-left: 1rem;
+}
+.btn-newgame {
+    font-size: 1rem;
+    background-color: var(--gold);
+    border-radius: 12px;
+    padding: 10px 10px;
+    border: 1px solid var(--black);
+    color: var(--black);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 0 8px 1px var(--black);
+}
+.footer {
+    background-color: var(--black);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+.footer__text {
+    color: var(--white);
+}
+.footer__link {
+    color:  #1E5096;
+}
+.footer__link:hover {
+    text-decoration: underline;
+}
