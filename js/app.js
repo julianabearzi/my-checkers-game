@@ -19,11 +19,11 @@ function TurnPiece() {
     if (turn === 1) {
       document.getElementById('turn').classList.add('p1');
       score++;
-      brownScore.innerHTML = 'Score: ' + score; 
+      blackScore.innerHTML = 'Score: ' + score; 
     } else {
       document.getElementById('turn').classList.add('p2');
       score++;
-      blackScore.innerHTML = 'Score: ' + score;
+      brownScore.innerHTML = 'Score: ' + score;
     }
   }
 
@@ -100,8 +100,6 @@ var init = function () {
     blackScore = document.getElementById('player__score--two');
     player1 = document.getElementById('player__name');
     turn = Math.random() > 0.5 ? 1 : 2
-
-
     renderBoard(); 
 }
 window.onload = init;
