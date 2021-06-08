@@ -1,5 +1,5 @@
 # My Checkers Game
-The purpose of this project is the web implementation of the game [checkers](https://es.wikipedia.org/wiki/Damas).
+The purpose of this project is the web implementation of the [checkers](https://es.wikipedia.org/wiki/Damas).
 
 # View online
 My own version made with HTML, CSS and Javascript. 
