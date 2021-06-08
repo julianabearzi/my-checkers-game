@@ -95,7 +95,7 @@ td {
 .checkers__piece--black, .checkers__piece--brown {
     width: 54px;
     height: 51px;
-    margin-left: 2.9px;
+    margin-left: 3px;
     margin-top: 3px;
     cursor: grab;
 }
