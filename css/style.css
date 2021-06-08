@@ -94,10 +94,18 @@ td {
 }
 .checkers__piece--black, .checkers__piece--brown {
     width: 54px;
-    height: 54px;
-    padding-top: 5px;
-   padding-left: 5px;
-   
+    height: 51px;
+    margin-left: 2.9px;
+    margin-top: 3px;
+    cursor: grab;
+}
+.checkers__piece--black.painted, .checkers__piece--brown.painted {
+     border-radius: 50%;
+     box-shadow: 0 0 10px 3px var(--gold);
+     background-color: var(--gold);
+}
+.grab {
+    cursor:grabbing;
 }
 #checkers .row:nth-child(odd) .cell:nth-child(even){
     background-color:var(--brown);
@@ -263,18 +271,22 @@ td {
         flex-direction: column;
     }
    .container-game {
-       max-width: 100vw;
+       width: 100vw;
    }
-   #checkers td,#checkers .checkers__piece--black, #checkers .checkers__piece--brown {
-    height: 10vw;
-    width: 10vw;
+   #checkers td {
+    height: 13vw;
+    width: 13vw;
+   }
+   #checkers .checkers__piece--black, #checkers .checkers__piece--brown{
+       width: 10vw;
+       height: 10vw;
    }
    .turn__piece.p1 div, .turn__piece.p2 div{
        width: 35px;
        height: 35px;
    }
-    .checkers__piece--black, .checkers__piece--brown {
-        padding: 3px;
-    }
-
+   
+    .checkers__piece--black.painted, .checkers__piece--brown.painted {
+        box-shadow: 0 0 10px 0 var(--gold);
+  }
 }
