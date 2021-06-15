@@ -10,24 +10,39 @@ var board = [
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null]
 ];
-var turn = 0;
+var turn = 2;
+var position;
 var brownScore = 0;
 var blackScore = 0;
 
 function TurnPiece() {
-    var score = 0;
-    if (turn === 1) {
-      document.getElementById('turn').classList.add('p1');
-    //  score++;
-      blackScore.innerHTML = 'Score: ' + score; 
-    } else {
+   // var score = 0;
+    var cells = document.getElementsByClassName('cell'); 
+    if (turn == 1) {
+      document.getElementById('turn').classList.remove('p2');
+      document.getElementById('turn').classList.add('p1'); 
+      for(i=0; i<cells.length; i++) {
+        cells[i].addEventListener('click', PieceClickHandler, false);
+      }
+    // score++;
+    //blackScore.innerHTML = 'Score: ' + score; 
+    } else if (turn == 2) {
+     
+      document.getElementById('turn').classList.remove('p1');
       document.getElementById('turn').classList.add('p2');
-   //   score++;
-      brownScore.innerHTML = 'Score: ' + score;
+      for(i=0; i<cells.length; i++) {
+        cells[i].addEventListener('click', PieceClickHandler, false);
+      }
+      // score++;
+      //brownScore.innerHTML = 'Score: ' + score;
     }
   }
+
  
+  
+
 var renderBoard = function () {
+  document.getElementById('message-box').className = 'message-box__hidden';
     var boardMatrix = '';
     for (var x = 0; x < board.length; x++) {
         boardMatrix += '<tr id="' + x + '" class="row">'
@@ -47,40 +62,76 @@ var renderBoard = function () {
     } 
     checkers.innerHTML = boardMatrix;
     TurnPiece(turn);
-    var cells = document.querySelectorAll('td'); 
-    for(i=0; i<cells.length; i++) {
-      cells[i].addEventListener('click', CellClickHandler, false);
-    }
     } 
     
-    function CellClickHandler() {
-    var pieces = document.querySelectorAll("table, table img"); 
-    if(!pieceAlreadySelected && this.firstElementChild) {
+    function PieceClickHandler() { 
+      if(turn==1){
+       if(!pieceAlreadySelected && this.firstElementChild) {
     cell = this; 
-    piece = this.innerHTML; 
-    for(i=0; pieces[i]; i++) {
-        pieces[i].classList.add("grab");
+    pieceBrown = this.innerHTML; 
+   
+    try {
+      this.querySelector('.checkers__piece--brown').classList.add("painted");  
+      pieceAlreadySelected = true; 
+    } catch (e) {
+      document.getElementById('message-box').className = 'message-box__display';
+      document.getElementById('message').innerHTML = 'Light brown pieces turn';
+      checkers.className = 'stop';
     }
-    this.querySelector('img').classList.add("painted"); 
-    pieceAlreadySelected = true; 
     }
     else if(pieceAlreadySelected){
+    position = this;
     cell.innerHTML= ''; 
-    this.innerHTML = piece; 
-    for(i=0; pieces[i]; i++) {
-      pieces[i].classList.remove("grab"); 
-    }
+    this.innerHTML = pieceBrown; 
     pieceAlreadySelected = false; 
+    if(position != cell){
+      turn = 2;
+      TurnPiece(turn);
+      }
+     }
     }
-}
+    else if (turn==2) {
+      if(!pieceAlreadySelected && this.firstElementChild) {
+        cell = this; 
+        pieceBlack = this.innerHTML; 
+        try {
+          this.querySelector('.checkers__piece--black').classList.add("painted"); 
+          pieceAlreadySelected = true; 
+        } catch (e) {
+          document.getElementById('message-box').className = 'message-box__display';
+          document.getElementById('message').innerHTML = 'Black pieces turn';
+          checkers.className = 'stop';
+        }
+        }
+        else if(pieceAlreadySelected){
+        position = this;
+        cell.innerHTML= ''; 
+        this.innerHTML = pieceBlack; 
+        pieceAlreadySelected = false; 
+        if(position != cell){
+        turn = 1;
+        TurnPiece(turn);
+        }
+        }
+    }
+  }
 
-var init = function () {
+  var btnOK = document.getElementById('btn-ok');
+  btnOK.addEventListener('click', function (){
+    document.getElementById('message-box').className = 'message-box__hidden';
+    checkers.className = ' ';
+  });
+
+  btn.addEventListener('click', function (){
+    turn = 2;
+    checkers.className = ' ';
+    renderBoard();
+  });
+  
+ var init = function () {
     checkers = document.getElementById('checkers')
     row = document.getElementsByClassName('row');
-    brownScore = document.getElementById('player__score');
-    blackScore = document.getElementById('player__score--two');
-    player1 = document.getElementById('player__name');
-    turn = Math.random() > 0.5 ? 1 : 2
+    btn = document.getElementById('btn');
     renderBoard();
 }
 

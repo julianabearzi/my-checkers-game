@@ -104,7 +104,7 @@ td {
      box-shadow: 0 0 10px 3px var(--gold);
      background-color: var(--gold);
 }
-.grab {
+.checkers__piece--black.grab, .checkers__piece--brown.grab {
     cursor:grabbing;
 }
 #checkers .row:nth-child(odd) .cell:nth-child(even){
@@ -119,6 +119,9 @@ td {
 }
 #checkers .row:nth-child(even) .cell:nth-child(odd){
     background-color: var(--brown);
+}
+#checkers.stop {
+    pointer-events: none;
 }
 .container-game .ribbon {
     width: 100%;
@@ -177,12 +180,51 @@ td {
    font-size: 1rem;
   font-weight: bold;
 }
-.container-game .players .player .player__time, .container-game .players .player2 .player__time--two {
+.container-game .players .player #player__time, .container-game .players .player2 #player__time--two {
     font-size: 1rem;
     padding: 0.5rem;
     border: double;
 }
+#message-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-bottom: 3.5em;
+    padding: 0.5em 3em;
+    background-color:rgb(134, 40, 40);
+    border: 3px solid var(--black);
+    border-radius: 10px;
+    top: 20%;
+    text-align: center;
+    pointer-events: auto;
+}
+#message-box button {
+    border: 1px solid var(--black);
+    color: var(--black);
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 2px 1px var(--black);
+    border: 1px solid var(--black);
+    font-size: 1.5rem;
+    transition: 0.5s;
+}
+#message-box button:hover{
+    background-color: var(--shine);
+}
 
+#message-box #message {
+    font-size: 2rem;
+    z-index: 1;
+    color: var(--lightbrown);
+}
+#message-box.message-box__display {
+    display: block;
+}
+#message-box.message-box__hidden {
+    display: none;
+}
 .btn-container {
     margin-top: 2rem;
     margin-bottom: 4rem;
