@@ -107,17 +107,17 @@ td {
 .checkers__piece--black.grab, .checkers__piece--brown.grab {
     cursor:grabbing;
 }
-#checkers .row:nth-child(odd) .cell:nth-child(even){
+#checkers .row:nth-child(odd) .cell-dark:nth-child(even){
     background-color:var(--brown);
 }
 
-#checkers .row:nth-child(even) .cell:nth-child(even){
+#checkers .row:nth-child(even) .cell-light:nth-child(even){
       background-color: var(--lightbrown);
 }
-#checkers .row:nth-child(odd) .cell:nth-child(odd){
+#checkers .row:nth-child(odd) .cell-light:nth-child(odd){
       background-color: var(--lightbrown);
 }
-#checkers .row:nth-child(even) .cell:nth-child(odd){
+#checkers .row:nth-child(even) .cell-dark:nth-child(odd){
     background-color: var(--brown);
 }
 #checkers.stop {

@@ -17,7 +17,7 @@ var blackScore = 0;
 
 function TurnPiece() {
    // var score = 0;
-    var cells = document.getElementsByClassName('cell'); 
+    var cells = document.getElementsByClassName('cell-dark'); 
     if (turn == 1) {
       document.getElementById('turn').classList.remove('p2');
       document.getElementById('turn').classList.add('p1'); 
@@ -37,17 +37,24 @@ function TurnPiece() {
       //brownScore.innerHTML = 'Score: ' + score;
     }
   }
-
- 
-  
-
-var renderBoard = function () {
+ function isOdd(num) { return num % 2;}
+ function isEven(value){
+  if (value%2 == 0)
+      return true;
+  else
+      return false;
+}
+  var renderBoard = function () {
   document.getElementById('message-box').className = 'message-box__hidden';
     var boardMatrix = '';
     for (var x = 0; x < board.length; x++) {
         boardMatrix += '<tr id="' + x + '" class="row">'
         for (var y = board[x].length - 1; y >= 0; y--) {
-            boardMatrix += '<td id="' + x + y + '" class="cell'
+          if((isOdd(x) && isOdd(y)) || ((isEven(x) && isEven(y)))){
+            boardMatrix += '<td id="' + x + y + '" class="cell-dark'
+          }else{
+             boardMatrix += '<td id="' + x + y + '" class="cell-light'
+          }
            if ((x === 0 &&  y % 2 === 0) || (x === 1 && y % 2 === 1) || (x === 2 && y % 2 === 0)) {
             boardMatrix +='"><img src="./img/black.png" class="checkers__piece--black" alt="black"></td>';
            }
