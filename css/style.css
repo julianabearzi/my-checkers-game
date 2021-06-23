@@ -99,26 +99,24 @@ td {
     margin-top: 3px;
     cursor: grab;
 }
-.checkers__piece--black.painted, .checkers__piece--brown.painted {
+ .checkers__piece--black.painted, .checkers__piece--brown.painted {
      border-radius: 50%;
      box-shadow: 0 0 10px 3px var(--gold);
      background-color: var(--gold);
 }
+
+#checkers.grabbing, .checkers__piece--brown.grabbing, .checkers__piece--black.grabbing {
+    cursor: grabbing;
+}
 .checkers__piece--black.grab, .checkers__piece--brown.grab {
     cursor:grabbing;
 }
-#checkers .row:nth-child(odd) .cell-dark:nth-child(even){
-    background-color:var(--brown);
+#checkers .cell-dark{
+  background-color:var(--brown);
 }
 
-#checkers .row:nth-child(even) .cell-light:nth-child(even){
+#checkers .cell-light{
       background-color: var(--lightbrown);
-}
-#checkers .row:nth-child(odd) .cell-light:nth-child(odd){
-      background-color: var(--lightbrown);
-}
-#checkers .row:nth-child(even) .cell-dark:nth-child(odd){
-    background-color: var(--brown);
 }
 #checkers.stop {
     pointer-events: none;
