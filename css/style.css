@@ -75,7 +75,6 @@ a {
     flex-direction: column;
     align-items: center;
     margin-top: 10vh;
-    position: relative;
     width: 100%;
 }
 .container-game #checkers {
@@ -120,6 +119,11 @@ td {
 }
 #checkers.stop {
     pointer-events: none;
+}
+.move-here{
+    background-color:var(--gold);
+    opacity: .5;
+    
 }
 .container-game .ribbon {
     width: 100%;
@@ -194,7 +198,7 @@ td {
     background-color:rgb(134, 40, 40);
     border: 3px solid var(--black);
     border-radius: 10px;
-    top: 20%;
+    top: 35%;
     text-align: center;
     pointer-events: auto;
 }
@@ -310,17 +314,16 @@ td {
     .navigation {
         flex-direction: column;
     }
-   .container-game {
-       width: 100vw;
-   }
+   
    #checkers td {
-    height: 13vw;
-    width: 13vw;
+      width: 11vw;
+      height: 11vw;
    }
    #checkers .checkers__piece--black, #checkers .checkers__piece--brown{
-       width: 10vw;
-       height: 10vw;
-   }
+    width: 8vw;
+    height: 8vw;
+    margin-left: 4px;
+}
    .turn__piece.p1 div, .turn__piece.p2 div{
        width: 35px;
        height: 35px;
