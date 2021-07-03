@@ -44,13 +44,17 @@ function TurnPiece(turn) {
   }
 }
 
-function isOdd(num) { return num % 2;}
+function isOdd(num) { 
+  return num % 2;
+}
 
 function isEven(value) {
-  if (value%2 == 0)
-      return true;
-  else
-      return false;
+  if (value%2 == 0) {
+    return true;
+  } 
+  else {
+    return false;
+  }
 }
 
 var renderBoard = function () {
@@ -65,15 +69,15 @@ var renderBoard = function () {
       else {
         boardMatrix += '<td id="' + x + y + '" class="cell-light'
       }
-      if ((x === 0 &&  y % 2 === 0) || (x === 1 && y % 2 === 1) || (x === 2 && y % 2 === 0)) {
+      if ((x == 0 &&  y % 2 == 0) || (x == 1 && y % 2 == 1) || (x == 2 && y % 2 == 0)) {
         boardMatrix +='"><img src="./img/black.png" class="checkers__piece--black" alt="black"></td>';
       }
-      else if ((x === board.length - 2 && y % 2 === 0) || (x === board.length - 1 && y % 2 === 1) 
-      || (x === board.length - 3 && y % 2 === 1) ) {
+      else if ((x == board.length - 2 && y % 2 == 0) || (x == board.length - 1 && y % 2 == 1) 
+      || (x == board.length - 3 && y % 2 == 1) ) {
         boardMatrix += '"><img src="./img/brown.png" class="checkers__piece--brown" alt="brown"></td>';
       }
       else {
-            boardMatrix += '"></td>';
+        boardMatrix += '"></td>';
       }         
     }
     boardMatrix += '</tr>';
@@ -84,9 +88,9 @@ var renderBoard = function () {
 
 function checkAttack() {
   for(i=0; i<cells.length; i++) {
-    if(cells[i].id == moveUpLeft){
+    if(cells[i].id == moveUpLeft) {
       moveUpLeft = cells[i]; 
-      if(moveUpLeft.innerHTML == ''){
+      if(moveUpLeft.innerHTML == '') {
       moveUpLeft.classList.add('move-here');
       moveUpLeft.classList.remove('cell-dark');
       }  
@@ -105,16 +109,19 @@ function checkAttack() {
       moveUpRightMult = cells[i]; 
     }
   }
+
   for(i=0; i<cells.length; i++) {
     if(cells[i].id == moveDownRightMult){
       moveDownRightMult = cells[i]; 
     } 
   }
+
   for(i=0; i<cells.length; i++) {
     if(cells[i].id == moveDownLeftMult){
       moveDownLeftMult = cells[i]; 
     } 
   }
+
   for(i=0; i<cells.length; i++) { 
     if(cells[i].id == moveDownLeft){
       moveDownLeft = cells[i]; 
@@ -123,7 +130,8 @@ function checkAttack() {
       moveDownLeft.classList.remove('cell-dark');
       }  
     }  
-  }          
+  }  
+
   for(i=0; i<cells.length; i++) { 
     if(cells[i].id == moveDownRight){
       moveDownRight = cells[i]; 
@@ -133,6 +141,7 @@ function checkAttack() {
      }  
     }
   }
+
   if(turn == 2){
     if((moveDownLeft.innerHTML == pieceBrown) 
     &&(moveDownLeftMult.innerHTML == ''))
@@ -168,6 +177,7 @@ function checkAttack() {
       mustAttack = false;
     }
   }
+
   else if(turn == 1){
    if((moveUpLeft.innerHTML == pieceBlack) 
    &&(moveUpLeftMult.innerHTML == ''))
@@ -208,8 +218,10 @@ function checkAttack() {
 
 function PieceClickHandler(e) { 
   if(turn == 1){
-    if(!pieceAlreadySelected && e.currentTarget.firstElementChild) { 
-      for(i=0; grabbing[i]; i++) grabbing[i].classList.add("grabbing"); 
+    if(!pieceAlreadySelected && e.currentTarget.firstElementChild) {
+      for(i=0; grabbing[i]; i++) {
+        grabbing[i].classList.add('grabbing'); 
+      }
       document.getElementById('checkers').classList.add('grabbing');
       cell = e.currentTarget; 
       pieceBrown = e.currentTarget.innerHTML;
@@ -218,7 +230,7 @@ function PieceClickHandler(e) {
       moveUpRightMult = moveUpRight-11;
       moveUpLeftMult = moveUpLeft-9;
       try {
-      e.currentTarget.querySelector('.checkers__piece--brown').classList.add("painted");  
+      e.currentTarget.querySelector('.checkers__piece--brown').classList.add('painted');  
       checkAttack();
       pieceAlreadySelected = true; 
       } catch (e) {
@@ -245,10 +257,12 @@ function PieceClickHandler(e) {
         }
         cell.innerHTML= ''; 
         position.innerHTML = pieceBrown; 
-        for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
+        for(i=0; grabbing[i]; i++) {
+          grabbing[i].classList.remove('grabbing');
+        }
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false; 
-        if(position != cell){
+        if(position != cell) {
         turn = 2;
         TurnPiece(turn);
         }
@@ -269,7 +283,9 @@ function PieceClickHandler(e) {
         cell.innerHTML= ''; 
         position.innerHTML = pieceBrown; 
         moveUpLeft.innerHTML = '';
-        for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
+        for(i=0; grabbing[i]; i++) {
+          grabbing[i].classList.remove('grabbing');
+        }
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         brownScore++;
@@ -280,7 +296,9 @@ function PieceClickHandler(e) {
         cell.innerHTML= ''; 
         position.innerHTML = pieceBrown; 
         moveUpRight.innerHTML = '';
-        for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
+        for(i=0; grabbing[i]; i++) {
+          grabbing[i].classList.remove('grabbing');
+        }
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         brownScore++;
@@ -292,7 +310,9 @@ function PieceClickHandler(e) {
   }
   else if (turn == 2) {
     if(!pieceAlreadySelected && e.currentTarget.firstElementChild) {
-      for(i=0; grabbing[i]; i++) grabbing[i].classList.add("grabbing"); 
+      for(i=0; grabbing[i]; i++) {
+        grabbing[i].classList.add('grabbing'); 
+      } 
       document.getElementById('checkers').classList.add('grabbing');
       cell = e.currentTarget; 
       pieceBlack = e.currentTarget.innerHTML;
@@ -301,7 +321,7 @@ function PieceClickHandler(e) {
       moveDownLeftMult = moveDownLeft+9;
       moveDownRightMult = moveDownRight+11;
       try {
-        e.currentTarget.querySelector('.checkers__piece--black').classList.add("painted");
+        e.currentTarget.querySelector('.checkers__piece--black').classList.add('painted');
         checkAttack(); 
         pieceAlreadySelected = true; 
       } catch (e) {
@@ -328,7 +348,9 @@ function PieceClickHandler(e) {
        }
        cell.innerHTML= ''; 
        position.innerHTML = pieceBlack; 
-       for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
+       for(i=0; grabbing[i]; i++) {
+         grabbing[i].classList.remove('grabbing');
+       }
        document.getElementById('checkers').classList.remove('grabbing');
        pieceAlreadySelected = false;
        if(position != cell) {
@@ -350,25 +372,28 @@ function PieceClickHandler(e) {
       }
       if(position.id == moveDownLeftMult.id 
         && moveDownLeft.innerHTML == pieceBrown
-        && moveDownLeftMult.innerHTML == '')
-      {
-      cell.innerHTML= ''; 
-      position.innerHTML = pieceBlack; 
-      moveDownLeft.innerHTML = '';
-      for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
-      document.getElementById('checkers').classList.remove('grabbing');
-      pieceAlreadySelected = false;
-      blackScore++;
-      turn = 1;
-      TurnPiece(turn);
+        && moveDownLeftMult.innerHTML == '') {
+        cell.innerHTML= ''; 
+        position.innerHTML = pieceBlack; 
+        moveDownLeft.innerHTML = '';
+        for(i=0; grabbing[i]; i++) {
+           grabbing[i].classList.remove('grabbing');
+        }
+        document.getElementById('checkers').classList.remove('grabbing');
+        pieceAlreadySelected = false;
+        blackScore++;
+        turn = 1;
+        TurnPiece(turn);
       }
       else if(position.id == moveDownRightMult.id
       && moveDownRight.innerHTML == pieceBrown
-      && moveDownRightMult.innerHTML == ''){
+      && moveDownRightMult.innerHTML == '') {
         cell.innerHTML= ''; 
         position.innerHTML = pieceBlack; 
         moveDownRight.innerHTML = '';
-        for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
+        for(i=0; grabbing[i]; i++) {
+          grabbing[i].classList.remove('grabbing');
+        } 
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         blackScore++;
@@ -403,7 +428,9 @@ var btnOK = document.getElementById('btn-ok');
 btnOK.addEventListener('click', function (){
   document.getElementById('message-box').className = 'message-box__hidden';
   checkers.className = ' ';
-  for(i=0; grabbing[i]; i++) grabbing[i].classList.remove('grabbing');
+  for(i=0; grabbing[i]; i++) {
+    grabbing[i].classList.remove('grabbing');
+  }
 });
 
 btn.addEventListener('click', function () {
@@ -445,7 +472,7 @@ function PostData() {
 }
   
 var init = function () {
-  checkers = document.getElementById('checkers')
+  checkers = document.getElementById('checkers');
   row = document.getElementsByClassName('row');
   btn = document.getElementById('btn');
   cells = document.getElementsByClassName('cell-dark'); 

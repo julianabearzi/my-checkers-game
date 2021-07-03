@@ -90,13 +90,14 @@ a {
 td {
     width: 60px;
     height: 60px;
+    position: relative;
 }
 .checkers__piece--black, .checkers__piece--brown {
     width: 54px;
     height: 51px;
     margin-left: 3px;
     margin-top: 3px;
-    cursor: grab;
+    cursor: grab; 
 }
  .checkers__piece--black.painted, .checkers__piece--brown.painted {
      border-radius: 50%;
@@ -201,6 +202,7 @@ td {
     top: 35%;
     text-align: center;
     pointer-events: auto;
+    z-index: 1;
 }
 #message-box button {
     border: 1px solid var(--black);
@@ -303,33 +305,35 @@ td {
     line-height: 2;
     
 }
+
+
 @media (max-width: 480px) {
     .header-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 10rem;
+        height: 10.5rem;
+        padding-top: 2rem;
     }
     .navigation {
         flex-direction: column;
+        padding-bottom: 3rem;
     }
-   
-   #checkers td {
+    #checkers td {
       width: 11vw;
       height: 11vw;
-   }
-   #checkers .checkers__piece--black, #checkers .checkers__piece--brown{
+    }
+    #checkers .checkers__piece--black, #checkers .checkers__piece--brown {
     width: 8vw;
     height: 8vw;
     margin-left: 4px;
-}
-   .turn__piece.p1 div, .turn__piece.p2 div{
+    }
+    .turn__piece.p1 div, .turn__piece.p2 div {
        width: 35px;
        height: 35px;
-   }
-   
+    }
     .checkers__piece--black.painted, .checkers__piece--brown.painted {
         box-shadow: 0 0 10px 0 var(--gold);
-  }
+    }
 }

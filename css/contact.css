@@ -1,0 +1,95 @@
+.container {
+    margin: 2rem;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    background-color: beige;
+    width: 95%;
+    border: 3px solid var(--brown);
+    margin: 1rem;
+    
+}
+.contact {
+    text-transform: uppercase;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: underline;
+    font-weight: 700;
+    text-align: center;
+}
+.field {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+}
+.field__label {
+   margin-left: 3rem;
+    text-align: right;
+    padding-right: 1rem;
+    font-weight: bold;
+}
+.field__textbox {
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid var(--brown);
+    font-size: 14px;
+}
+.field__textbox--message {
+    height: 8rem;
+    margin-left: 1rem;
+    resize: none;
+}
+.field__textbox--email {
+    margin-left: 1.5rem;
+}
+.field .btn-send {
+    margin-left: 30%;
+    text-transform: uppercase;
+    color: var(--black);
+    border-radius: 2px;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    font-size: 0.8rem;
+    border: 1px solid var(--brown);
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
+}
+.field .btn-send:hover {
+    background-color: rgb(248, 204, 212);
+}
+#message-box__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3rem;
+    position: absolute;
+    margin-bottom: 3.5em;
+    padding: 0.5em 3em;
+    background-color: var(--black);
+    border:1px solid var(--lightbrown);
+    top: 40%;
+    text-align: center;
+    pointer-events: auto;
+    z-index: 1;
+    color: var(--lightbrown);
+    font-size: 1.5rem;
+}
+#message-box__form.message-box__display--form {
+    display: block;
+}
+#message-box__form.message-box__hidden--form {
+    display: none;
+}
+.form.stop {
+    pointer-events: none;
+}
+@media (max-width: 480px) {
+    .field__label, .field__textbox {
+     font-size: 0.8rem;
+    }
+}
