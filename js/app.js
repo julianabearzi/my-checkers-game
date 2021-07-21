@@ -26,6 +26,10 @@ var moveUpLeft = null;
 var moveUpLeftMult = null; 
 var moveUpRight = null;
 var moveUpRightMult = null;
+document.getElementById('save').addEventListener('click', SaveGame);
+document.getElementById('load').addEventListener('click', LoadLastGame);
+document.getElementById('btn').addEventListener('click', NewGame);
+document.getElementById('btn-ok').addEventListener('click', HideMessage);
 
 function TurnPiece(turn) {
   if (turn == 1) {
@@ -44,11 +48,11 @@ function TurnPiece(turn) {
   }
 }
 
-function isOdd(num) { 
+function IsOdd(num) { 
   return num % 2;
 }
 
-function isEven(value) {
+function IsEven(value) {
   if (value%2 == 0) {
     return true;
   } 
@@ -57,24 +61,28 @@ function isEven(value) {
   }
 }
 
-var renderBoard = function () {
+function RenderBoard() {
   document.getElementById('message-box').className = 'message-box__hidden';
   var boardMatrix = '';
   for (var x = 0; x < board.length; x++) {
     boardMatrix += '<tr id="' + x + '" class="row">'
     for (var y = board[x].length - 1; y >= 0; y--) {
-      if((isOdd(x) && isOdd(y)) || ((isEven(x) && isEven(y)))){
+      if((IsOdd(x) && IsOdd(y)) || ((IsEven(x) && IsEven(y)))){
         boardMatrix += '<td id="' + x + y + '" class="cell-dark'
+        board[x][y] = null;
       } 
       else {
         boardMatrix += '<td id="' + x + y + '" class="cell-light'
+        board[x][y] = null;
       }
       if ((x == 0 &&  y % 2 == 0) || (x == 1 && y % 2 == 1) || (x == 2 && y % 2 == 0)) {
         boardMatrix +='"><img src="./img/black.png" class="checkers__piece--black" alt="black"></td>';
+        board[x][y] = 2;
       }
       else if ((x == board.length - 2 && y % 2 == 0) || (x == board.length - 1 && y % 2 == 1) 
       || (x == board.length - 3 && y % 2 == 1) ) {
         boardMatrix += '"><img src="./img/brown.png" class="checkers__piece--brown" alt="brown"></td>';
+        board[x][y] = 1;
       }
       else {
         boardMatrix += '"></td>';
@@ -84,6 +92,38 @@ var renderBoard = function () {
   } 
   checkers.innerHTML = boardMatrix;
   TurnPiece(turn);
+} 
+
+function BoardInPlay(turnLast, lastBlackScore, lastBrownScore) {
+  turn = turnLast;
+  blackScore = lastBlackScore;
+  brownScore = lastBrownScore;
+  document.getElementById('message-box').className = 'message-box__hidden';
+  var boardMatrixInPlay = '';
+  for (var x = 0; x < board.length; x++) {
+    boardMatrixInPlay += '<tr id="' + x + '" class="row">'
+    for (var y = board[x].length - 1; y >= 0; y--) {
+      if((IsOdd(x) && IsOdd(y)) || ((IsEven(x) && IsEven(y)))){
+        boardMatrixInPlay += '<td id="' + x + y + '" class="cell-dark'
+      } 
+      else {
+        boardMatrixInPlay += '<td id="' + x + y + '" class="cell-light'
+      }
+      if (board[x][y] == 2) {
+        boardMatrixInPlay +='"><img src="./img/black.png" class="checkers__piece--black" alt="black"></td>';
+      }
+      else if (board[x][y] == 1) {
+        boardMatrixInPlay += '"><img src="./img/brown.png" class="checkers__piece--brown" alt="brown"></td>';
+      }
+      else {
+        boardMatrixInPlay += '"></td>';
+      }         
+    }
+    boardMatrixInPlay += '</tr>';
+  } 
+  checkers.innerHTML = boardMatrixInPlay;
+  TurnPiece(turnLast);
+  UpdatePlayerScore(lastBrownScore, lastBlackScore);
 } 
 
 function checkAttack() {
@@ -241,7 +281,8 @@ function PieceClickHandler(e) {
     }
     else if(pieceAlreadySelected && !mustAttack){ 
       position = e.currentTarget;
-      PostData();
+      board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 1;
+      board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
       if((position.innerHTML != pieceBlack)
       && (position.innerHTML != pieceBrown)
       && (position.id == (cell.id-9) 
@@ -270,7 +311,8 @@ function PieceClickHandler(e) {
     }
     else if(pieceAlreadySelected && mustAttack){
       position = e.currentTarget;
-      PostData();
+      board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 1;
+      board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
       if((moveUpLeftMult.id%10) <= 7){ 
         moveUpLeftMult.classList.remove('move-here');
         moveUpLeftMult.classList.add('cell-dark');
@@ -280,6 +322,7 @@ function PieceClickHandler(e) {
         moveUpRightMult.classList.add('cell-dark');
       }
       if(position.id == moveUpLeftMult.id && moveUpLeft.innerHTML == pieceBlack && moveUpLeftMult.innerHTML == ''){
+        board[(moveUpLeft.id).substring(0,1)][(moveUpLeft.id).substring(1,2)] = null;
         cell.innerHTML= ''; 
         position.innerHTML = pieceBrown; 
         moveUpLeft.innerHTML = '';
@@ -293,6 +336,7 @@ function PieceClickHandler(e) {
         TurnPiece(turn);
       }
       else if(position.id == moveUpRightMult.id && moveUpRight.innerHTML == pieceBlack && moveUpRightMult.innerHTML == ''){
+        board[(moveUpRight.id).substring(0,1)][(moveUpRight.id).substring(1,2)] = null;
         cell.innerHTML= ''; 
         position.innerHTML = pieceBrown; 
         moveUpRight.innerHTML = '';
@@ -332,7 +376,8 @@ function PieceClickHandler(e) {
     }
     else if(pieceAlreadySelected && !mustAttack){
       position = e.currentTarget;
-      PostData();
+      board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 2;
+      board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
       if((position.innerHTML != pieceBrown)
       && (position.innerHTML != pieceBlack) 
       && (position.id == -(-cell.id-9) 
@@ -361,7 +406,8 @@ function PieceClickHandler(e) {
     }
     else if(pieceAlreadySelected && mustAttack){
       position = e.currentTarget;
-      PostData();
+      board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 2;
+      board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
       if((moveDownLeftMult.id%10) <= 7){ 
         moveDownLeftMult.classList.remove('move-here');
         moveDownLeftMult.classList.add('cell-dark');
@@ -373,6 +419,7 @@ function PieceClickHandler(e) {
       if(position.id == moveDownLeftMult.id 
         && moveDownLeft.innerHTML == pieceBrown
         && moveDownLeftMult.innerHTML == '') {
+        board[(moveDownLeft.id).substring(0,1)][(moveDownLeft.id).substring(1,2)] = null;
         cell.innerHTML= ''; 
         position.innerHTML = pieceBlack; 
         moveDownLeft.innerHTML = '';
@@ -388,6 +435,7 @@ function PieceClickHandler(e) {
       else if(position.id == moveDownRightMult.id
       && moveDownRight.innerHTML == pieceBrown
       && moveDownRightMult.innerHTML == '') {
+        board[(moveDownRight.id).substring(0,1)][(moveDownRight.id).substring(1,2)] = null;
         cell.innerHTML= ''; 
         position.innerHTML = pieceBlack; 
         moveDownRight.innerHTML = '';
@@ -406,7 +454,7 @@ function PieceClickHandler(e) {
     CheckWin();
 }
 
-function UpdatePlayerScore(blackScore, brownScore){
+function UpdatePlayerScore(blackScore, brownScore) {
   document.getElementById('player__score').textContent =  'Score: ' + brownScore; 
   document.getElementById('player__score--two').textContent = 'Score: ' + blackScore; 
 }
@@ -424,16 +472,15 @@ function CheckWin(){
   }
 }
 
-var btnOK = document.getElementById('btn-ok');
-btnOK.addEventListener('click', function (){
+function HideMessage(){
   document.getElementById('message-box').className = 'message-box__hidden';
   checkers.className = ' ';
   for(i=0; grabbing[i]; i++) {
     grabbing[i].classList.remove('grabbing');
   }
-});
+}
 
-btn.addEventListener('click', function () {
+function NewGame() {
   turn = 2;
   checkers.className = ' ';
   pieceAlreadySelected = false;
@@ -448,9 +495,9 @@ btn.addEventListener('click', function () {
   moveUpLeftMult = null; 
   moveUpRight = null;
   moveUpRightMult = null;
-  renderBoard();
+  RenderBoard();
   UpdatePlayerScore(brownScore, blackScore);
-});
+}
 
 function PostData() {
   fetch('https://jsonplaceholder.typicode.com/posts', {
@@ -465,19 +512,40 @@ function PostData() {
   }).then(function (response) {
     return  response.json();
   }).then(function (json) {
-    console.log(json);
+     //console.log(json);
   }).catch(function (error) {
     console.log(error);
   })
 }
-  
-var init = function () {
-  checkers = document.getElementById('checkers');
-  row = document.getElementsByClassName('row');
-  btn = document.getElementById('btn');
-  cells = document.getElementsByClassName('cell-dark'); 
-  grabbing = document.getElementsByTagName('img');
-  renderBoard();
+
+function SaveGame() {
+  var savedGame = {
+    turn: turn,
+    board: board,
+    blackScore: blackScore,
+    brownScore: brownScore
+  };
+  localStorage.setItem('game', JSON.stringify(savedGame));
+  document.getElementById('message-box').className = 'message-box__display';
+  document.getElementById('message').innerHTML = 'Game saved';
+  checkers.className = 'stop';
 }
 
-window.onload = init;
+function LoadLastGame() {
+  var lastGame = JSON.parse(localStorage.getItem('game'));
+  turn = lastGame.turn;
+  blackScore = lastGame.blackScore;
+  brownScore = lastGame.brownScore;
+  board = lastGame.board;
+  BoardInPlay(turn, blackScore, brownScore);
+}
+
+window.onload = function () {
+  checkers = document.getElementById('checkers');
+  row = document.getElementsByClassName('row');
+  cells = document.getElementsByClassName('cell-dark'); 
+  grabbing = document.getElementsByTagName('img');
+  RenderBoard();
+}
+
+

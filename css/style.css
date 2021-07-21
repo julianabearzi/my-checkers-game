@@ -84,7 +84,6 @@ a {
     align-items: center;
     border-collapse: collapse;
     border: 2px solid var(--black);
-    width: 100%;
 }
 
 td {
@@ -230,15 +229,18 @@ td {
     display: none;
 }
 .btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 .btn-newgame {
     position: relative;
-    font-size: 1rem;
     background-color: var(--gold);
     border-radius: 12px;
-    padding: 10px 40px;
+    padding: 5px 75px;
     border: 1px solid var(--black);
     color: var(--black);
     cursor: pointer;
@@ -247,6 +249,8 @@ td {
     box-shadow: 0 0 8px 1px var(--black);
     transition: 0.5s;
     overflow: hidden;
+    margin-bottom: 1rem;
+    font-size: 1rem;
 }
 .btn-newgame:hover {
     background-color: var(--shine);
@@ -263,6 +267,17 @@ td {
 }
 .btn-newgame:hover::before { 
     left: 100%;
+}
+.save-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#save, #load {
+    margin-right: 0.2rem;
+    padding: 5px 15px;
 }
 .footer {
     display: flex;
