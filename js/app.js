@@ -532,12 +532,20 @@ function SaveGame() {
 }
 
 function LoadLastGame() {
-  var lastGame = JSON.parse(localStorage.getItem('game'));
-  turn = lastGame.turn;
-  blackScore = lastGame.blackScore;
-  brownScore = lastGame.brownScore;
-  board = lastGame.board;
-  BoardInPlay(turn, blackScore, brownScore);
+  try {
+    var lastGame = JSON.parse(localStorage.getItem('game'));
+    turn = lastGame.turn;
+    blackScore = lastGame.blackScore;
+    brownScore = lastGame.brownScore;
+    board = lastGame.board;
+    BoardInPlay(turn, blackScore, brownScore);
+  }
+  catch(e) {
+    document.getElementById('message-box').className = 'message-box__display';
+    document.getElementById('message').innerHTML = 'Error. Save a game and try again';
+    checkers.className = 'stop';
+  }
+  
 }
 
 window.onload = function () {
