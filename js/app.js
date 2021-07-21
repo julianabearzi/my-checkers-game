@@ -123,7 +123,7 @@ function BoardInPlay(turnLast, lastBlackScore, lastBrownScore) {
   } 
   checkers.innerHTML = boardMatrixInPlay;
   TurnPiece(turnLast);
-  UpdatePlayerScore(lastBrownScore, lastBlackScore);
+  UpdatePlayerScore(lastBlackScore, lastBrownScore);
 } 
 
 function checkAttack() {
