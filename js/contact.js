@@ -12,19 +12,30 @@ fullName.addEventListener('input', readText);
 email.addEventListener('input', readText);
 message.addEventListener('input', readText);
 
+// Validations of complete fields, email format, alphanumeric characters and minimum characters
+// If everything is valid, open the default email sending tool of the operating system
 form.addEventListener('submit', function(event) {
  event.preventDefault();
  var regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
- var { fullName, email, message } = elements;
- if (fullName == '' || email == '' || message == '') {
+ var regexChar = /^[a-zA-Z0-9\.]*$/;
+ if (elements.fullName == '' || elements.email == '' || elements.message == '') {
    showAlert('incomplete fields');
  }
- else if (!regex.test(email)) {
+ else if (!regex.test(elements.email)) {
    showAlert('invalid mail');
+ }
+ else if (elements.message.length < 5) {
+  showAlert('short message');
+ }
+ else if (!regex.test(elements.email)) {
+  showAlert('invalid mail');
+ }
+ else if (!regexChar.test(elements.fullName)) {
+  showAlert('invalid characters');
  }
  else {
    PostData('https://jsonplaceholder.typicode.com/posts', elements);
-   showAlert('sent');
+   window.open('mailto:julietad299@gmail.com?body='+elements.message);
  }
 });
 
@@ -50,7 +61,6 @@ function PostData(url, elements) {
 
 function showAlert(error){
   var messageBox = document.querySelector('#message-box__form');
-  
   if(error == 'incomplete fields'){
    messageBox.className = 'message-box__display--form';
    messageBox.innerHTML = 'All the fields are required';
@@ -61,12 +71,17 @@ function showAlert(error){
     messageBox.innerHTML = 'Invalid email format';
     form.classList.add('stop');
   }
-  else if(error == 'sent') {
-  messageBox.className = 'message-box__display--form';
-  messageBox.innerHTML = 'Message sent!';
-  form.classList.add('stop');
+  else if(error == 'short message'){
+    messageBox.className = 'message-box__display--form';
+    messageBox.innerHTML = 'Message requires more than 5 characters';
+    form.classList.add('stop');
   }
-  setTimeout(() => {
+  else if(error == 'invalid characters'){
+    messageBox.className = 'message-box__display--form';
+    messageBox.innerHTML = 'Invalid characters';
+    form.classList.add('stop');
+  }
+  setTimeout( function () {
     messageBox.className = 'message-box__hidden--form';
     form.className = 'form';
   }, 2000);
