@@ -3,16 +3,19 @@ var cell = null;
 var pieceAlreadySelected = null; 
 var pieceBrown = null;
 var pieceBlack = null;
+var player1 = null;
+var player2 = null;
 var board = [
+  [2, null, 2, null, 2, null, 2, null],
+  [null, 2, null, 2, null, 2, null, 2],
+  [2, null, 2, null, 2, null, 2, null],
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null]
+  [null, 1, null, 1, null, 1, null, 1],
+  [1, null, 1, null, 1, null, 1, null],
+  [null, 1, null, 1, null, 1, null, 1]
 ];
+var turnPlayer = null;
 var turn = 2;
 var position = null;
 var mustAttack = false;
@@ -30,9 +33,11 @@ document.getElementById('save').addEventListener('click', SaveGame);
 document.getElementById('load').addEventListener('click', LoadLastGame);
 document.getElementById('btn').addEventListener('click', NewGame);
 document.getElementById('btn-ok').addEventListener('click', HideMessage);
+document.getElementById('btn-player').addEventListener('click', SavePlayers);
 
 function TurnPiece(turn) {
   if (turn == 1) {
+    turnPlayer.textContent = player1.value;
     document.getElementById('turn').classList.remove('p2');
     document.getElementById('turn').classList.add('p1'); 
     for(i=0; i<cells.length; i++) {
@@ -40,6 +45,7 @@ function TurnPiece(turn) {
     }
   }
   else if (turn == 2) {
+    turnPlayer.textContent = player2.value;
     document.getElementById('turn').classList.remove('p1');
     document.getElementById('turn').classList.add('p2');
     for(i=0; i<cells.length; i++) {
@@ -47,6 +53,8 @@ function TurnPiece(turn) {
     }
   }
 }
+
+
 
 function IsOdd(num) { 
   return num % 2;
@@ -68,25 +76,13 @@ function RenderBoard() {
     boardMatrix += '<tr id="' + x + '" class="row">'
     for (var y = board[x].length - 1; y >= 0; y--) {
       if((IsOdd(x) && IsOdd(y)) || ((IsEven(x) && IsEven(y)))){
-        boardMatrix += '<td id="' + x + y + '" class="cell-dark'
-        board[x][y] = null;
+        boardMatrix += '<td id="' + x + y + '" class="cell-dark';
+        boardMatrix += '"></td>';
       } 
       else {
-        boardMatrix += '<td id="' + x + y + '" class="cell-light'
-        board[x][y] = null;
-      }
-      if ((x == 0 &&  y % 2 == 0) || (x == 1 && y % 2 == 1) || (x == 2 && y % 2 == 0)) {
-        boardMatrix +='"><img src="./img/black.png" class="checkers__piece--black" alt="black"></td>';
-        board[x][y] = 2;
-      }
-      else if ((x == board.length - 2 && y % 2 == 0) || (x == board.length - 1 && y % 2 == 1) 
-      || (x == board.length - 3 && y % 2 == 1) ) {
-        boardMatrix += '"><img src="./img/brown.png" class="checkers__piece--brown" alt="brown"></td>';
-        board[x][y] = 1;
-      }
-      else {
+        boardMatrix += '<td id="' + x + y + '" class="cell-light';
         boardMatrix += '"></td>';
-      }         
+      }    
     }
     boardMatrix += '</tr>';
   } 
@@ -125,6 +121,23 @@ function BoardInPlay(turnLast, lastBlackScore, lastBrownScore) {
   TurnPiece(turnLast);
   UpdatePlayerScore(lastBlackScore, lastBrownScore);
 } 
+
+function OrderPiecesInNewGame () {
+  for (var x = 0; x < board.length; x++) {
+    for (var y = board[x].length - 1; y >= 0; y--) {
+     if ((x == 0 &&  y % 2 == 0) || (x == 1 && y % 2 == 1) || (x == 2 && y % 2 == 0)) {
+     board[x][y] = 2;
+     }
+     else if ((x == board.length - 2 && y % 2 == 0) || (x == board.length - 1 && y % 2 == 1) 
+     || (x == board.length - 3 && y % 2 == 1) ) {
+      board[x][y] = 1;
+     }
+     else {
+      board[x][y] = null;
+     }
+   }
+  }
+}
 
 function checkAttack() {
   for(i=0; i<cells.length; i++) {
@@ -274,9 +287,7 @@ function PieceClickHandler(e) {
       checkAttack();
       pieceAlreadySelected = true; 
       } catch (e) {
-      document.getElementById('message-box').className = 'message-box__display';
-      document.getElementById('message').innerHTML = 'Light brown pieces turn';
-      checkers.className = 'stop';
+      DisplayMessage('Light brown pieces turn');
       }
     }
     else if(pieceAlreadySelected && !mustAttack){ 
@@ -369,9 +380,7 @@ function PieceClickHandler(e) {
         checkAttack(); 
         pieceAlreadySelected = true; 
       } catch (e) {
-        document.getElementById('message-box').className = 'message-box__display';
-        document.getElementById('message').innerHTML = 'Black pieces turn';
-        checkers.className = 'stop';
+        DisplayMessage('Black pieces turn');
       }   
     }
     else if(pieceAlreadySelected && !mustAttack){
@@ -454,33 +463,64 @@ function PieceClickHandler(e) {
     CheckWin();
 }
 
+function SavePlayers() {
+  if (player1.value == '' || player2.value == '') {
+    document.getElementById('incomplete-fields').className = 'incomplete-fields__display';
+  }
+  else {
+   document.getElementById('player__name').textContent =  player1.value; 
+   document.getElementById('player__name--two').textContent =  player2.value; 
+   turnPlayer.textContent = player2.value;
+   HideMessage();
+   OrderPiecesInNewGame();
+   BoardInPlay(turn, blackScore, brownScore);
+  }
+}
+
 function UpdatePlayerScore(blackScore, brownScore) {
   document.getElementById('player__score').textContent =  'Score: ' + brownScore; 
   document.getElementById('player__score--two').textContent = 'Score: ' + blackScore; 
 }
 
-function CheckWin(){
+function CheckWin() {
   if(blackScore == 12){
-    document.getElementById('message-box').className = 'message-box__display';
-    document.getElementById('message').innerHTML = 'Player 2 wins';
-    checkers.className = 'stop';
+    var p2Name = document.getElementById('player__name--two').textContent;
+    DisplayMessage(p2Name+ ' wins');
   }
   else if(brownScore == 12){
-    document.getElementById('message-box').className = 'message-box__display';
-    document.getElementById('message').innerHTML = 'Player 1 wins';
-    checkers.className = 'stop';
+    var p1Name = document.getElementById('player__name').textContent;
+    DisplayMessage(p1Name + ' wins');
   }
 }
 
-function HideMessage(){
+function DisplayMessage (message) {
+  document.getElementById('message-box').className = 'message-box__display';
+  checkers.className = 'stop';
+  document.getElementById('container-btn').className = 'stop';
+  document.getElementById('message').innerHTML = message;
+}
+
+function HideMessage() {
   document.getElementById('message-box').className = 'message-box__hidden';
+  document.getElementById('player1').className = 'player-input';
+  document.getElementById('player2').className = 'player-input';
+  document.getElementById('incomplete-fields').className = 'incomplete-fields__hidden';
   checkers.className = ' ';
+  document.getElementById('container-btn').className = 'btn-container';
+  document.getElementById('btn-player').className = 'btn-hidden';
+  document.getElementById('btn-ok').className = 'btn-display';
   for(i=0; grabbing[i]; i++) {
     grabbing[i].classList.remove('grabbing');
   }
 }
 
 function NewGame() {
+  document.getElementById('player1').className = 'player-input__display';
+  document.getElementById('player2').className = 'player-input__display';
+  document.getElementById('btn-player').className = 'btn-display';
+  document.getElementById('btn-ok').className = 'btn-hidden';
+  document.getElementById('player__name').textContent =  'Player 1'; 
+  document.getElementById('player__name--two').textContent =  'Player 2'; 
   turn = 2;
   checkers.className = ' ';
   pieceAlreadySelected = false;
@@ -495,8 +535,12 @@ function NewGame() {
   moveUpLeftMult = null; 
   moveUpRight = null;
   moveUpRightMult = null;
+  player1.value = null;
+  player2.value = null;
+  turnPlayer.textContent = '';
   RenderBoard();
   UpdatePlayerScore(brownScore, blackScore);
+  DisplayMessage('Enter player names');
 }
 
 function PostData() {
@@ -521,14 +565,14 @@ function PostData() {
 function SaveGame() {
   var savedGame = {
     turn: turn,
+    p1: player1.value,
+    p2: player2.value,
     board: board,
     blackScore: blackScore,
     brownScore: brownScore
   };
   localStorage.setItem('game', JSON.stringify(savedGame));
-  document.getElementById('message-box').className = 'message-box__display';
-  document.getElementById('message').innerHTML = 'Game saved';
-  checkers.className = 'stop';
+  DisplayMessage('Game saved');
 }
 
 function LoadLastGame() {
@@ -538,14 +582,14 @@ function LoadLastGame() {
     blackScore = lastGame.blackScore;
     brownScore = lastGame.brownScore;
     board = lastGame.board;
+    document.getElementById('player__name').textContent =  lastGame.p1; 
+    document.getElementById('player__name--two').textContent =  lastGame.p2; 
     BoardInPlay(turn, blackScore, brownScore);
+    turn == 1 ? turnPlayer.textContent = lastGame.p1 : turnPlayer.textContent = lastGame.p2;
   }
   catch(e) {
-    document.getElementById('message-box').className = 'message-box__display';
-    document.getElementById('message').innerHTML = 'Error. Save a game and try again';
-    checkers.className = 'stop';
+    DisplayMessage('Error. Save a game and try again');
   }
-  
 }
 
 window.onload = function () {
@@ -553,6 +597,9 @@ window.onload = function () {
   row = document.getElementsByClassName('row');
   cells = document.getElementsByClassName('cell-dark'); 
   grabbing = document.getElementsByTagName('img');
+  player1 = document.getElementById('p1-name');
+  player2 = document.getElementById('p2-name');
+  turnPlayer = document.getElementById('turn-player');
   RenderBoard();
 }
 

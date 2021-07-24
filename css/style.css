@@ -117,7 +117,7 @@ td {
 #checkers .cell-light{
       background-color: var(--lightbrown);
 }
-#checkers.stop {
+#checkers.stop, #container-btn.stop {
     pointer-events: none;
 }
 .move-here{
@@ -144,6 +144,10 @@ td {
     align-items: center;
     justify-content: flex-start;
     width: 40%
+}
+#turn #turn-player {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
 }
 .turn__piece.p1 div{
    width: 50px;
@@ -203,7 +207,7 @@ td {
     pointer-events: auto;
     z-index: 1;
 }
-#message-box button {
+#message-box #btn-ok, #message-box .btn-display {
     border: 1px solid var(--black);
     color: var(--black);
     cursor: pointer;
@@ -213,10 +217,9 @@ td {
     font-size: 1.5rem;
     transition: 0.5s;
 }
-#message-box button:hover{
+#message-box #btn-ok:hover{
     background-color: var(--shine);
 }
-
 #message-box #message {
     font-size: 2rem;
     z-index: 1;
@@ -225,10 +228,35 @@ td {
 #message-box.message-box__display {
     display: block;
 }
-#message-box.message-box__hidden {
+#message-box.message-box__hidden, #message-box .btn-hidden, #message-box .incomplete-fields__hidden {
     display: none;
 }
-.btn-container {
+#message-box h3 {
+    color: var(--white);
+    border: 3px solid var(--white);
+    padding: 0 0.2rem;
+}
+#message-box h4.incomplete-fields__display {
+    color: white;
+    margin-top: 0;
+    font-size: 1.3rem;
+    padding-bottom: 1rem;
+    border: none;
+}
+#message-box input {
+    padding: 0.25rem 0;
+}
+#message-box .player-input {
+    display: none;
+}
+#message-box .player-input__display {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.btn-container, #container-btn.stop {
     display: flex;
     flex-direction: column;
     align-items: center;
