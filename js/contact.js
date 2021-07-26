@@ -13,7 +13,7 @@ email.addEventListener('input', readText);
 message.addEventListener('input', readText);
 
 // Validations of complete fields, email format, alphanumeric characters and minimum characters
-// If everything is valid, open the default email sending tool of the operating system
+// If all is valid, the default OS email sending tool is opened
 form.addEventListener('submit', function(event) {
  event.preventDefault();
  var regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -26,9 +26,6 @@ form.addEventListener('submit', function(event) {
  }
  else if (elements.message.length < 5) {
   showAlert('short message');
- }
- else if (!regex.test(elements.email)) {
-  showAlert('invalid mail');
  }
  else if (!regexChar.test(elements.fullName)) {
   showAlert('invalid characters');

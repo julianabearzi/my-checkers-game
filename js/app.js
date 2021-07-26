@@ -16,7 +16,8 @@ var board = [
   [null, 1, null, 1, null, 1, null, 1]
 ];
 var turnPlayer = null;
-var turn = 2;
+var movCounter = null;
+var turn = 0;
 var position = null;
 var mustAttack = false;
 var brownScore = 0;
@@ -37,24 +38,20 @@ document.getElementById('btn-player').addEventListener('click', SavePlayers);
 
 function TurnPiece(turn) {
   if (turn == 1) {
-    turnPlayer.textContent = player1.value;
-    document.getElementById('turn').classList.remove('p2');
-    document.getElementById('turn').classList.add('p1'); 
+    turnPlayer.textContent = document.getElementById('player__name').textContent;
+    document.getElementById('turn').className = 'p1'; 
     for(i=0; i<cells.length; i++) {
     cells[i].addEventListener('click', PieceClickHandler, false); 
     }
   }
   else if (turn == 2) {
-    turnPlayer.textContent = player2.value;
-    document.getElementById('turn').classList.remove('p1');
-    document.getElementById('turn').classList.add('p2');
+    turnPlayer.textContent = document.getElementById('player__name--two').textContent;
+    document.getElementById('turn').className = 'p2';
     for(i=0; i<cells.length; i++) {
     cells[i].addEventListener('click', PieceClickHandler, false);
     }
   }
 }
-
-
 
 function IsOdd(num) { 
   return num % 2;
@@ -87,7 +84,6 @@ function RenderBoard() {
     boardMatrix += '</tr>';
   } 
   checkers.innerHTML = boardMatrix;
-  TurnPiece(turn);
 } 
 
 function BoardInPlay(turnLast, lastBlackScore, lastBrownScore) {
@@ -460,7 +456,7 @@ function PieceClickHandler(e) {
     }
     UpdatePlayerScore(blackScore, brownScore);
   }
-    CheckWin();
+  CheckWin();
 }
 
 function SavePlayers() {
@@ -471,6 +467,7 @@ function SavePlayers() {
    document.getElementById('player__name').textContent =  player1.value; 
    document.getElementById('player__name--two').textContent =  player2.value; 
    turnPlayer.textContent = player2.value;
+   turn = 2;
    HideMessage();
    OrderPiecesInNewGame();
    BoardInPlay(turn, blackScore, brownScore);
@@ -521,7 +518,7 @@ function NewGame() {
   document.getElementById('btn-ok').className = 'btn-hidden';
   document.getElementById('player__name').textContent =  'Player 1'; 
   document.getElementById('player__name--two').textContent =  'Player 2'; 
-  turn = 2;
+  document.getElementById('turn').className = ' ';
   checkers.className = ' ';
   pieceAlreadySelected = false;
   mustAttack = false;
@@ -537,6 +534,7 @@ function NewGame() {
   moveUpRightMult = null;
   player1.value = null;
   player2.value = null;
+  movCounter = null;
   turnPlayer.textContent = '';
   RenderBoard();
   UpdatePlayerScore(brownScore, blackScore);
@@ -565,8 +563,8 @@ function PostData() {
 function SaveGame() {
   var savedGame = {
     turn: turn,
-    p1: player1.value,
-    p2: player2.value,
+    p1: document.getElementById('player__name').textContent,
+    p2: document.getElementById('player__name--two').textContent,
     board: board,
     blackScore: blackScore,
     brownScore: brownScore
