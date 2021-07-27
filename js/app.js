@@ -1,8 +1,8 @@
 var checkers = null;
-var cell = null; 
-var pieceAlreadySelected = null; 
 var pieceBrown = null;
 var pieceBlack = null;
+var pieceAlreadySelected = null; 
+var grabbing = null;
 var player1 = null;
 var player2 = null;
 var board = [
@@ -15,6 +15,9 @@ var board = [
   [1, null, 1, null, 1, null, 1, null],
   [null, 1, null, 1, null, 1, null, 1]
 ];
+var cells = null;
+var cell = null; 
+var row = null;
 var turnPlayer = null;
 var movCounter = null;
 var turn = 0;
@@ -35,6 +38,7 @@ document.getElementById('load').addEventListener('click', LoadLastGame);
 document.getElementById('btn').addEventListener('click', NewGame);
 document.getElementById('btn-ok').addEventListener('click', HideMessage);
 document.getElementById('btn-player').addEventListener('click', SavePlayers);
+document.getElementById('btn-draw').addEventListener('click', HideMessageGameOverInADraw);
 
 function TurnPiece(turn) {
   if (turn == 1) {
@@ -47,7 +51,7 @@ function TurnPiece(turn) {
   else if (turn == 2) {
     turnPlayer.textContent = document.getElementById('player__name--two').textContent;
     document.getElementById('turn').className = 'p2';
-    for(i=0; i<cells.length; i++) {
+    for(var i=0; i<cells.length; i++) {
     cells[i].addEventListener('click', PieceClickHandler, false);
     }
   }
@@ -136,7 +140,7 @@ function OrderPiecesInNewGame () {
 }
 
 function checkAttack() {
-  for(i=0; i<cells.length; i++) {
+  for(var i=0; i<cells.length; i++) {
     if(cells[i].id == moveUpLeft) {
       moveUpLeft = cells[i]; 
       if(moveUpLeft.innerHTML == '') {
@@ -159,19 +163,19 @@ function checkAttack() {
     }
   }
 
-  for(i=0; i<cells.length; i++) {
+  for(var i=0; i<cells.length; i++) {
     if(cells[i].id == moveDownRightMult){
       moveDownRightMult = cells[i]; 
     } 
   }
 
-  for(i=0; i<cells.length; i++) {
+  for(var i=0; i<cells.length; i++) {
     if(cells[i].id == moveDownLeftMult){
       moveDownLeftMult = cells[i]; 
     } 
   }
 
-  for(i=0; i<cells.length; i++) { 
+  for(var i=0; i<cells.length; i++) { 
     if(cells[i].id == moveDownLeft){
       moveDownLeft = cells[i]; 
       if(moveDownLeft.innerHTML == ''){
@@ -181,7 +185,7 @@ function checkAttack() {
     }  
   }  
 
-  for(i=0; i<cells.length; i++) { 
+  for(var i=0; i<cells.length; i++) { 
     if(cells[i].id == moveDownRight){
       moveDownRight = cells[i]; 
      if(moveDownRight.innerHTML == ''){
@@ -266,9 +270,10 @@ function checkAttack() {
 }
 
 function PieceClickHandler(e) { 
+  var boardCopy = JSON.stringify(board);
   if(turn == 1){
     if(!pieceAlreadySelected && e.currentTarget.firstElementChild) {
-      for(i=0; grabbing[i]; i++) {
+      for(var i=0; grabbing[i]; i++) {
         grabbing[i].classList.add('grabbing'); 
       }
       document.getElementById('checkers').classList.add('grabbing');
@@ -288,8 +293,6 @@ function PieceClickHandler(e) {
     }
     else if(pieceAlreadySelected && !mustAttack){ 
       position = e.currentTarget;
-      board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 1;
-      board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
       if((position.innerHTML != pieceBlack)
       && (position.innerHTML != pieceBrown)
       && (position.id == (cell.id-9) 
@@ -305,14 +308,16 @@ function PieceClickHandler(e) {
         }
         cell.innerHTML= ''; 
         position.innerHTML = pieceBrown; 
-        for(i=0; grabbing[i]; i++) {
+        for(var i=0; grabbing[i]; i++) {
           grabbing[i].classList.remove('grabbing');
         }
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false; 
         if(position != cell) {
-        turn = 2;
-        TurnPiece(turn);
+          board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 1;
+          board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
+          turn = 2;
+          TurnPiece(turn);
         }
       }
     }
@@ -361,7 +366,7 @@ function PieceClickHandler(e) {
   }
   else if (turn == 2) {
     if(!pieceAlreadySelected && e.currentTarget.firstElementChild) {
-      for(i=0; grabbing[i]; i++) {
+      for(var i=0; grabbing[i]; i++) {
         grabbing[i].classList.add('grabbing'); 
       } 
       document.getElementById('checkers').classList.add('grabbing');
@@ -381,8 +386,6 @@ function PieceClickHandler(e) {
     }
     else if(pieceAlreadySelected && !mustAttack){
       position = e.currentTarget;
-      board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 2;
-      board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
       if((position.innerHTML != pieceBrown)
       && (position.innerHTML != pieceBlack) 
       && (position.id == -(-cell.id-9) 
@@ -398,12 +401,14 @@ function PieceClickHandler(e) {
        }
        cell.innerHTML= ''; 
        position.innerHTML = pieceBlack; 
-       for(i=0; grabbing[i]; i++) {
+       for(var i=0; grabbing[i]; i++) {
          grabbing[i].classList.remove('grabbing');
        }
        document.getElementById('checkers').classList.remove('grabbing');
        pieceAlreadySelected = false;
        if(position != cell) {
+        board[(position.id).substring(0,1)][(position.id).substring(1,2)] = 2;
+        board[(cell.id).substring(0,1)][(cell.id).substring(1,2)] = null;
         turn = 1;
         TurnPiece(turn);
        }
@@ -428,7 +433,7 @@ function PieceClickHandler(e) {
         cell.innerHTML= ''; 
         position.innerHTML = pieceBlack; 
         moveDownLeft.innerHTML = '';
-        for(i=0; grabbing[i]; i++) {
+        for(var i=0; grabbing[i]; i++) {
            grabbing[i].classList.remove('grabbing');
         }
         document.getElementById('checkers').classList.remove('grabbing');
@@ -444,7 +449,7 @@ function PieceClickHandler(e) {
         cell.innerHTML= ''; 
         position.innerHTML = pieceBlack; 
         moveDownRight.innerHTML = '';
-        for(i=0; grabbing[i]; i++) {
+        for(var i=0; grabbing[i]; i++) {
           grabbing[i].classList.remove('grabbing');
         } 
         document.getElementById('checkers').classList.remove('grabbing');
@@ -457,6 +462,7 @@ function PieceClickHandler(e) {
     UpdatePlayerScore(blackScore, brownScore);
   }
   CheckWin();
+  CheckForADraw(boardCopy);
 }
 
 function SavePlayers() {
@@ -479,6 +485,17 @@ function UpdatePlayerScore(blackScore, brownScore) {
   document.getElementById('player__score--two').textContent = 'Score: ' + blackScore; 
 }
 
+function CheckForADraw(boardCopy) {
+  if (boardCopy != JSON.stringify(board) && brownScore >= 9 && blackScore >= 9) {
+    mustAttack ? movCounter = 0 : movCounter++;
+  }
+  if (movCounter >= 20) {
+    document.getElementById('btn-ok').className = 'btn-hidden';
+    document.getElementById('btn-draw').className = 'btn-display';
+    DisplayMessage('Game over in a draw');
+  }
+}
+
 function CheckWin() {
   if(blackScore == 12){
     var p2Name = document.getElementById('player__name--two').textContent;
@@ -492,9 +509,9 @@ function CheckWin() {
 
 function DisplayMessage (message) {
   document.getElementById('message-box').className = 'message-box__display';
-  checkers.className = 'stop';
   document.getElementById('container-btn').className = 'stop';
   document.getElementById('message').innerHTML = message;
+  checkers.className = 'stop';
 }
 
 function HideMessage() {
@@ -502,13 +519,19 @@ function HideMessage() {
   document.getElementById('player1').className = 'player-input';
   document.getElementById('player2').className = 'player-input';
   document.getElementById('incomplete-fields').className = 'incomplete-fields__hidden';
-  checkers.className = ' ';
   document.getElementById('container-btn').className = 'btn-container';
   document.getElementById('btn-player').className = 'btn-hidden';
   document.getElementById('btn-ok').className = 'btn-display';
-  for(i=0; grabbing[i]; i++) {
+  checkers.className = ' ';
+  for(var i=0; grabbing[i]; i++) {
     grabbing[i].classList.remove('grabbing');
   }
+}
+
+function HideMessageGameOverInADraw() {
+  document.getElementById('message-box').className = 'message-box__hidden';
+  document.getElementById('container-btn').className = 'btn-container';
+  movCounter = 0;
 }
 
 function NewGame() {
@@ -516,6 +539,7 @@ function NewGame() {
   document.getElementById('player2').className = 'player-input__display';
   document.getElementById('btn-player').className = 'btn-display';
   document.getElementById('btn-ok').className = 'btn-hidden';
+  document.getElementById('btn-draw').className = 'btn-hidden';
   document.getElementById('player__name').textContent =  'Player 1'; 
   document.getElementById('player__name--two').textContent =  'Player 2'; 
   document.getElementById('turn').className = ' ';
@@ -563,8 +587,8 @@ function PostData() {
 function SaveGame() {
   var savedGame = {
     turn: turn,
-    p1: document.getElementById('player__name').textContent,
-    p2: document.getElementById('player__name--two').textContent,
+    p1: player1.value,
+    p2: player2.value,
     board: board,
     blackScore: blackScore,
     brownScore: brownScore
@@ -584,6 +608,9 @@ function LoadLastGame() {
     document.getElementById('player__name--two').textContent =  lastGame.p2; 
     BoardInPlay(turn, blackScore, brownScore);
     turn == 1 ? turnPlayer.textContent = lastGame.p1 : turnPlayer.textContent = lastGame.p2;
+    document.getElementById('btn-ok').className = 'btn-display';
+    document.getElementById('btn-draw').className = 'btn-hidden';
+    checkers.className = ' ';
   }
   catch(e) {
     DisplayMessage('Error. Save a game and try again');
