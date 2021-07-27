@@ -565,24 +565,24 @@ function NewGame() {
   DisplayMessage('Enter player names');
 }
 
-function PostData() {
-  fetch('https://jsonplaceholder.typicode.com/posts', {
-   method: 'POST',
-   body: JSON.stringify({
-     player: turn,
-     cellId: position.id
-   }),
-   headers: {
-    'Content-type': 'application/json; charset=UTF-8',
-   },
-  }).then(function (response) {
-    return  response.json();
-  }).then(function (json) {
-     //console.log(json);
-  }).catch(function (error) {
-    console.log(error);
-  })
-}
+// function PostData() {
+//   fetch('https://jsonplaceholder.typicode.com/posts', {
+//    method: 'POST',
+//    body: JSON.stringify({
+//      player: turn,
+//      cellId: position.id
+//    }),
+//    headers: {
+//     'Content-type': 'application/json; charset=UTF-8',
+//    },
+//   }).then(function (response) {
+//     return  response.json();
+//   }).then(function (json) {
+//      //console.log(json);
+//   }).catch(function (error) {
+//     console.log(error);
+//   })
+// }
 
 function SaveGame() {
   var savedGame = {

@@ -137,6 +137,7 @@ td {
     width: 100%;
     background-color: var(--lightbrown);
     border: 2px solid var(--black);
+    padding-bottom: 2rem;
 }
 #turn {
     display: flex;
@@ -182,16 +183,13 @@ td {
     align-items: center;
     justify-content: center;
     width: 100%;
+    font-size: 1.2rem;
 }
 .container-game .players .player #player__name, .container-game .players .player2 #player__name--two {
    font-size: 1rem;
   font-weight: bold;
 }
-.container-game .players .player #player__time, .container-game .players .player2 #player__time--two {
-    font-size: 1rem;
-    padding: 0.5rem;
-    border: double;
-}
+
 #message-box {
     display: flex;
     flex-direction: column;
