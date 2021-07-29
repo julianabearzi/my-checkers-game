@@ -1,6 +1,6 @@
 :root {
-    --fuenteHeader: 'Quattrocento', serif;
-    --fuentePrincipal: 'Quattrocento Sans', sans-serif;
+    --Header: 'Quattrocento', serif;
+    --Principal: 'Quattrocento Sans', sans-serif;
 
     --brown: #3f2307;
     --lightbrown: #f7e2cf;
@@ -17,7 +17,7 @@ html {
     box-sizing: inherit;
   }
 body {
-    font-family: var(--fuentePrincipal);
+    font-family: var(--Principal);
    
 }
 a {
@@ -43,7 +43,7 @@ a {
   justify-content: space-between;
   padding-left: 20px;
   height: 40px;
-  font-family: var(--fuenteHeader);
+  font-family: var(--Header);
   
 }
 .logo-header {
@@ -306,6 +306,99 @@ td {
     margin-right: 0.2rem;
     padding: 5px 15px;
 }
+.container__saved-games {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30vw;
+}
+.container__saved-games h2 {
+    color: var(--gold);
+    text-shadow: 1px 1px 1px var(--white);
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    font-size: 2rem;
+    width: 100vw;
+    text-align: center;
+    margin-top: 2rem;
+}
+.container__saved-games #list {
+    list-style-type: none;
+    overflow-y: scroll;
+    width: 20rem;
+    height: 90vh;
+    background-color: var(--lightbrown);
+    border-radius: 10px;
+}
+.container__saved-games #container-btn__saved-games {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+}
+.container__saved-games .navigation-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.container__saved-games .navigation-container .btn-newgame {
+    margin-right: 0.2rem;
+    margin-bottom: 0.5rem;
+    padding-left: 2.5rem;
+    width: 30%;
+}
+#list {
+    display: flex;
+    flex-direction: column;
+}
+#list li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#list li .load-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid var(--gold);
+    margin-right: 0.5rem;
+    font-weight: bolder;
+    width: 70%;
+}
+#list li .date {
+    margin-bottom: 1rem;
+}
+#list li .winner {
+    margin-bottom: 1rem;
+}
+#list .list__empty {
+    width: 20rem;
+    height: 25rem;
+    border-radius: 10px;
+    border:none;
+}
+.element-saved__container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+.element-saved__container p {
+   margin-right: 0.5rem;
+   margin-left: 0.5rem;
+}
+#list li .load-game{
+    width: 4rem;
+    height: 1.5rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    background-color: rgba(0, 0, 0, 0.87);
+    border-radius: 10px;
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
 .footer {
     display: flex;
     justify-content: center;
@@ -377,5 +470,8 @@ td {
     }
     .checkers__piece--black.painted, .checkers__piece--brown.painted {
         box-shadow: 0 0 10px 0 var(--gold);
+    }
+    .container__saved-games #list {
+        width: 100vw;
     }
 }
