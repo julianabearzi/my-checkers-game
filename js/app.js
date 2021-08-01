@@ -1,3 +1,4 @@
+//@ts-check
 var checkers = null;
 var pieceBrown = null;
 var pieceBlack = null;
@@ -36,18 +37,23 @@ var moveUpRightMult = null;
 var savedGames = [];
 var selectedGame = null;
 var loadedGame = null;
-document.getElementById('save').addEventListener('click', SaveGame);
 document.getElementById('load').addEventListener('click', LoadLastGame);
 document.getElementById('btn').addEventListener('click', NewGame);
 document.getElementById('btn-ok').addEventListener('click', HideMessage);
 document.getElementById('btn-player').addEventListener('click', SavePlayers);
 document.getElementById('btn-draw').addEventListener('click', HideMessageGameOverInADraw);
+document.getElementById('save').addEventListener('click', function() {
+  SaveGame();
+  if (turn != 0) {
+    DisplayMessage('Game saved');
+  }
+});
 
 function TurnPiece(turn) {
   if (turn == 1) {
     turnPlayer.textContent = document.getElementById('player__name').textContent;
     document.getElementById('turn').className = 'p1';
-    for (i = 0; i < cells.length; i++) {
+    for (var i = 0; i < cells.length; i++) {
       cells[i].addEventListener('click', PieceClickHandler, false);
     }
   }
@@ -343,6 +349,7 @@ function PieceClickHandler(e) {
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         brownScore++;
+        brownScore == 12 ? checkers.className = 'stop' : checkers.className = ' ';
         turn = 2;
         TurnPiece(turn);
       }
@@ -357,6 +364,7 @@ function PieceClickHandler(e) {
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         brownScore++;
+        brownScore == 12 ? checkers.className = 'stop' : checkers.className = ' ';
         turn = 2;
         TurnPiece(turn);
       }
@@ -438,6 +446,7 @@ function PieceClickHandler(e) {
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         blackScore++;
+        blackScore == 12 ? checkers.className = 'stop' : checkers.className = ' ';
         turn = 1;
         TurnPiece(turn);
       }
@@ -454,6 +463,7 @@ function PieceClickHandler(e) {
         document.getElementById('checkers').classList.remove('grabbing');
         pieceAlreadySelected = false;
         blackScore++;
+        blackScore == 12 ? checkers.className = 'stop' : checkers.className = ' ';
         turn = 1;
         TurnPiece(turn);
       }
@@ -498,10 +508,12 @@ function CheckForADraw(boardCopy) {
 function CheckWin() {
   if (blackScore == 12) {
     var p2Name = document.getElementById('player__name--two').textContent;
+    SaveGame();
     DisplayMessage(p2Name + ' wins');
   }
   else if (brownScore == 12) {
     var p1Name = document.getElementById('player__name').textContent;
+    SaveGame();
     DisplayMessage(p1Name + ' wins');
   }
 }
@@ -521,10 +533,11 @@ function HideMessage() {
   document.getElementById('container-btn').className = 'btn-container';
   document.getElementById('btn-player').className = 'btn-hidden';
   document.getElementById('btn-ok').className = 'btn-display';
-  checkers.className = ' ';
   for (var i = 0; grabbing[i]; i++) {
     grabbing[i].classList.remove('grabbing');
   }
+  blackScore == 12 || brownScore == 12 ? checkers.className = 'stop' :  checkers.className = ' ';
+  savedGames = JSON.parse(localStorage.getItem('game')) || [];
 }
 
 function HideMessageGameOverInADraw() {
@@ -597,10 +610,9 @@ function SaveGame() {
       board: board,
       blackScore: blackScore,
       brownScore: brownScore,
-      date: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
+      date: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
     });
     localStorage.setItem('game', JSON.stringify(savedGames));
-    DisplayMessage('Game saved');
   }
 }
 
@@ -620,7 +632,7 @@ function LoadLastGame() {
     turn == 1 ? turnPlayer.textContent = lastGame.p1 : turnPlayer.textContent = lastGame.p2;
     document.getElementById('btn-ok').className = 'btn-display';
     document.getElementById('btn-draw').className = 'btn-hidden';
-    checkers.className = ' ';
+    blackScore == 12 || brownScore == 12 ? checkers.className = 'stop' :  checkers.className = ' ';
   }
   catch (e) {
     DisplayMessage('Error. Save a game and try again');
@@ -641,7 +653,7 @@ function LoadSelectedGame() {
   turn == 1 ? turnPlayer.textContent = selectedGame.p1 : turnPlayer.textContent = selectedGame.p2;
   document.getElementById('btn-ok').className = 'btn-display';
   document.getElementById('btn-draw').className = 'btn-hidden';
-  checkers.className = ' ';
+  blackScore == 12 || brownScore == 12 ? checkers.className = 'stop' :  checkers.className = ' ';
 }
 
 window.onload = function () {
