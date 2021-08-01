@@ -401,13 +401,16 @@ td {
 }
 .footer {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-self: stretch;
     background-color: var(--black);
+    padding-top: 0.5rem;
 }
 .footer__text {
     color: var(--white);
-    font-size: 12px;
+    font-size: 15px;
+    margin-bottom: 1.5rem;
 }
 .footer__text--link {
     color: var(--blue);
@@ -415,7 +418,12 @@ td {
 .footer__text--link:hover {
    text-decoration: underline;
 }
-
+.footer img {
+    width: 35px;
+    height: 35px;
+    margin-left: 0.5rem;
+    margin-top: 0.3rem;
+}
 .rules {
   display: flex;
   flex-direction: column;
@@ -473,5 +481,17 @@ td {
     }
     .container__saved-games #list {
         width: 100vw;
+    }
+    .footer {
+       width: 100vw;
+    }
+    .footer .footer__text {
+        font-size: 10px;
+    }
+    .footer img {
+        width: 25px;
+        height: 25px;
+        margin-left: 0.3rem;
+        margin-top: 0.2rem;
     }
 }

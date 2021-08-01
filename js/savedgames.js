@@ -1,42 +1,78 @@
+'use strict'
 var savedGamesList = document.getElementById('list');
-var loadBtn = document.getElementsByClassName('load-game');
+var loadBtn =  document.getElementsByClassName('load-game');
+var scoreBtn = document.getElementById('order-score');
+var dateBtn = document.getElementById('order-date');
 var selectedGame = null;
 
-function LoadGame() {
-   var arraySavedGame = JSON.parse(localStorage.getItem('game'));
-   arraySavedGame.reverse();
-   for (let i = 0; i < arraySavedGame.length; i++) {
-      loadBtn[i].addEventListener('click', function () {
-         selectedGame = arraySavedGame[i];
-         localStorage.setItem('selectedGame', JSON.stringify(selectedGame));
-         localStorage.setItem('loadedGame', JSON.stringify(true));
-         location.href = 'index.html';
-      });
+scoreBtn.addEventListener('click', GamesSortedByScore);
+dateBtn.addEventListener('click', GamesSortedByDate);
+
+function LoadGame(arraySavedGame) {
+   if(arraySavedGame) {
+      for (var i = 0; i < arraySavedGame.length; i++) {
+         loadBtn[i].addEventListener('click', function (e) {
+            i = JSON.parse(e.target.id);
+            selectedGame = arraySavedGame[i];
+            localStorage.setItem('selectedGame', JSON.stringify(selectedGame));
+            localStorage.setItem('loadedGame', JSON.stringify(true));
+            location.href = 'index.html';
+         });
+      }
    }
 }
 
-function RenderList() {
-   var games = JSON.parse(localStorage.getItem('game'));
-   games.reverse();
+function OrderByScore (score, so, arrScore) {
+   if (so != -1 && so != 1) so = 1;
+   arrScore.sort(function (a, b) {
+     return (a[score] - b[score]) * so;
+   });
+}
+
+function OrderByScores (scoreBlack, scoreBrown, so, arrScore) {
+   if (so != -1 && so != 1) so = 1;
+   arrScore.sort(function (a, b) {
+   return (a[scoreBlack] - b[scoreBrown]) * so;
+   });
+}
+
+function GamesSortedByScore() {
+   var arrayScore = JSON.parse(localStorage.getItem('game'));
+   OrderByScore('blackScore', -1, arrayScore);
+   OrderByScores('blackScore', 'brownScore', -1, arrayScore);
+   RenderList(arrayScore);
+   LoadGame(arrayScore);
+}
+
+function GamesSortedByDate() {
+   var arrayGames = JSON.parse(localStorage.getItem('game'));
+   if (arrayGames) {
+      arrayGames.reverse();
+   }
+   RenderList(arrayGames);
+   LoadGame(arrayGames);
+}
+
+function RenderList(arrayList) {
    var element = '';
    try {
-      for (var i = 0; i < games.length; i++) {
+      for (var i = 0; i < arrayList.length; i++) {
          element += '<li>';
          element += '<div class="load-container">';
          element += '<div class="element-saved__container">';
-         element += '<div>' + games[i].p1 + '</div>';
+         element += '<div>' + arrayList[i].p1 + '</div>';
          element += '<p>VS</p>';
-         element += '<div>' + games[i].p2 + '</div>';
+         element += '<div>' + arrayList[i].p2 + '</div>';
          element += '</div>';
-         element += '<span class="score">Score: ' + games[i].brownScore + ' - ' + games[i].blackScore + '</span><p class="date">' + games[i].date + '</p>';
-         if (games[i].brownScore == 12) {
-            element += '<div class="winner"> 🏆 ' + games[i].p1 + ' WINS </div>';
+         element += '<span class="score">Score: ' + arrayList[i].brownScore + ' - ' + arrayList[i].blackScore + '</span><p class="date">' + arrayList[i].date + '</p>';
+         if (arrayList[i].brownScore == 12) {
+            element += '<div class="winner"> 🏆 ' + arrayList[i].p1 + ' WINS </div>';
          }
-         else if (games[i].blackScore == 12) {
-            element += '<div class="winner"> 🏆 ' + games[i].p2 + ' WINS </div>';
+         else if (arrayList[i].blackScore == 12) {
+            element += '<div class="winner"> 🏆 ' + arrayList[i].p2 + ' WINS </div>';
          }
          element += '</div>';
-         element += '<button class="load-game">Load</button>';
+         element += '<button id="'+i+'" class="load-game">Load</button>';
          element += '</li>';
          savedGamesList.innerHTML = element;
       }
@@ -49,6 +85,5 @@ function RenderList() {
 }
 
 window.onload = function () {
-   RenderList();
-   LoadGame();
+   GamesSortedByDate();
 }

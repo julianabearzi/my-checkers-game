@@ -8,7 +8,6 @@
     width: 95%;
     border: 3px solid var(--brown);
     margin: 1rem;
-    height: 70vh;
 }
 .contact {
     text-transform: uppercase;
@@ -95,5 +94,8 @@
     #message-box__form {
         top: 60%;
         margin-left: 1.2rem;
+    }
+    .field .btn-send {
+        margin-left: 25%;
     }
 }
