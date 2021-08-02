@@ -1,0 +1,236 @@
+.container-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+    width: 100%;
+}
+.container-game #checkers {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    border: 2px solid var(--black);
+}
+td {
+    width: 60px;
+    height: 60px;
+    position: relative;
+}
+.checkers__piece--black, .checkers__piece--brown {
+    width: 54px;
+    height: 51px;
+    margin-left: 3px;
+    margin-top: 3px;
+    cursor: grab; 
+}
+ .checkers__piece--black.painted, .checkers__piece--brown.painted {
+     border-radius: 50%;
+     box-shadow: 0 0 10px 3px var(--gold);
+     background-color: var(--gold);
+}
+
+#checkers.grabbing, .checkers__piece--brown.grabbing, .checkers__piece--black.grabbing {
+    cursor: grabbing;
+}
+.checkers__piece--black.grab, .checkers__piece--brown.grab {
+    cursor:grabbing;
+}
+#checkers .cell-dark{
+  background-color:var(--brown);
+}
+
+#checkers .cell-light{
+      background-color: var(--lightbrown);
+}
+#checkers.stop, #container-btn.stop {
+    pointer-events: none;
+}
+.move-here{
+    background-color:var(--gold);
+    opacity: .5;
+    
+}
+.container-game .ribbon {
+    width: 100%;
+    height: 0.2rem;
+    background-color: var(--black);
+}
+.container-game .players {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--lightbrown);
+    border: 2px solid var(--black);
+    padding-bottom: 2rem;
+}
+#turn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 40%
+}
+#turn #turn-player {
+    margin-top: 0.1rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+#turn.p1 div{
+   width: 50px;
+   height: 50px;
+   background: url(../img/brown.png);
+   background-position: center;
+   background-size: cover;
+   margin-top: 0.5rem;
+}
+#turn.p2 div{
+    width: 50px;
+   height: 50px;
+   background: url(../img/black.png);
+   background-position: center;
+   background-size: cover;
+   margin-top: 0.5rem;
+}
+.container-game .players #turn p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.container-game .players .player, .container-game .players .player2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.2rem;
+}
+.container-game .players .player #player__name, .container-game .players .player2 #player__name--two {
+   font-size: 1rem;
+  font-weight: bold;
+}
+
+#message-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-bottom: 3.5em;
+    padding: 0.5em 3em;
+    background-color:rgb(134, 40, 40);
+    border: 3px solid var(--black);
+    border-radius: 10px;
+    top: 35%;
+    text-align: center;
+    pointer-events: auto;
+    z-index: 1;
+}
+#message-box #btn-ok, #message-box .btn-display {
+    border: 1px solid var(--black);
+    color: var(--black);
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 2px 1px var(--black);
+    border: 1px solid var(--black);
+    font-size: 1.5rem;
+    transition: 0.5s;
+}
+#message-box #btn-ok:hover{
+    background-color: var(--shine);
+}
+#message-box #message {
+    font-size: 2rem;
+    z-index: 1;
+    color: var(--lightbrown);
+}
+#message-box.message-box__display {
+    display: block;
+}
+#message-box.message-box__hidden, #message-box .btn-hidden, #message-box .incomplete-fields__hidden {
+    display: none;
+}
+#message-box h3 {
+    color: var(--white);
+    border: 3px solid var(--white);
+    padding: 0 0.2rem;
+}
+#message-box h4.incomplete-fields__display {
+    color: white;
+    margin-top: 0;
+    font-size: 1.3rem;
+    padding-bottom: 1rem;
+    border: none;
+}
+#message-box input {
+    padding: 0.25rem 0;
+}
+#message-box .player-input {
+    display: none;
+}
+#message-box .player-input__display {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.btn-container, #container-btn.stop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+.btn-newgame {
+    position: relative;
+    background-color: var(--gold);
+    border-radius: 12px;
+    padding: 5px 75px;
+    border: 1px solid var(--black);
+    color: var(--black);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 0 8px 1px var(--black);
+    transition: 0.5s;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+.btn-newgame:hover {
+    background-color: var(--shine);
+}
+.btn-container .btn-newgame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,transparent,#fff,transparent);
+    transition: 0.5s;
+}
+.btn-newgame:hover::before { 
+    left: 100%;
+}
+.save-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#save, #load {
+    margin-right: 0.2rem;
+    padding: 5px 15px;
+}
+

@@ -1,0 +1,61 @@
+
+@media (max-width: 480px) {
+    .header-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 10.5rem;
+        padding-top: 2rem;
+    }
+    .navigation {
+        flex-direction: column;
+        padding-bottom: 3rem;
+    }
+    #checkers td {
+      width: 11vw;
+      height: 11vw;
+    }
+    #checkers .checkers__piece--black, #checkers .checkers__piece--brown {
+    width: 8vw;
+    height: 8vw;
+    margin-left: 4px;
+    }
+    #turn.p1 div, #turn.p2 div {
+       width: 35px;
+       height: 35px;
+    }
+    .checkers__piece--black.painted, .checkers__piece--brown.painted {
+        box-shadow: 0 0 10px 0 var(--gold);
+    }
+    .container__saved-games .order-items {
+        width: 100vw;
+        margin-right: 0;
+        padding-left: 1rem;
+    }
+    .container__saved-games #list {
+        width: 100vw;
+    }
+    .footer {
+       width: 100vw;
+    }
+    .footer .footer__text {
+        font-size: 10px;
+    }
+    .footer img {
+        width: 25px;
+        height: 25px;
+        margin-left: 0.3rem;
+        margin-top: 0.2rem;
+    }
+    .field__label, .field__textbox {
+        font-size: 0.8rem;
+    }
+    #message-box__form {
+        top: 60%;
+        margin-left: 1.2rem;
+    }
+    .field .btn-send {
+        margin-left: 25%;
+    }
+}

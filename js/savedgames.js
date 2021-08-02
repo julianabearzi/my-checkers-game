@@ -1,4 +1,3 @@
-'use strict'
 var savedGamesList = document.getElementById('list');
 var loadBtn =  document.getElementsByClassName('load-game');
 var scoreBtn = document.getElementById('order-score');
@@ -32,7 +31,7 @@ function OrderByScore (score, so, arrScore) {
 function OrderByScores (scoreBlack, scoreBrown, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
-   return (a[scoreBlack] - b[scoreBrown]) * so;
+   return (a[scoreBrown] - b[scoreBlack]) * so;
    });
 }
 

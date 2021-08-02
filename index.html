@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,73 +8,89 @@
     <title>My Checkers Game</title>
     <link rel="icon" href="img/checkers.png" type="img/png">
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans&family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/mediaqueries.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans&family=Quattrocento:wght@400;700&display=swap"
+        rel="stylesheet">
 </head>
-<body>
-<div class="wrapper">
-    <header id="main-header">
-        <div class="header-container">
-            <div class="logo-header"> 
-                <img src="./img/checkers.png" class="logo-header__image"  alt="logo">
-                <h1><a class="logo-header__text" href="index.html">
-                      CHECKERS
-           </a></h1> 
-            </div>
-           <div class="navigation">
-               <a href="#" class="navigation__link">Sign Up</a>
-               <a href="#" class="navigation__link">Login</a>
-               <a href="contact.html" class="navigation__link">Contact</a>
-           </div> 
-       </div></header>
-       
-    <main>
-        <div class="container-game">
-            <div id="message-box" class="message-box__hidden">
-                <p id="message"></p>
-                <div id="player1" class="player-input">
-                    <h3>P1</h3>
-                    <input id="p1-name" type="text" maxlength="10">
-                </div>
-                
-                <div id="player2" class="player-input">
-                    <h3>P2</h3>
-                    <input id="p2-name" type="text" maxlength="10">
-                </div>
-                <h4 id="incomplete-fields" class="incomplete-fields__hidden">Incomplete fields</h4>
-                <button id="btn-ok" class="btn-display">OK</button>
-                <button id="btn-player" class="btn-hidden">OK</button>
-                <button id="btn-draw" class="btn-hidden">OK</button>
-            </div>
-        <table id="checkers"></table>
-        <div class="ribbon"></div>
-        <div class="players">
-            <div class="player">
-                <p id="player__name">Player 1</p>
-                <p id="player__score">Score: 0</p>
-            </div>
-            <div id="turn" class="turn__piece"><p></p><p id="turn-player"></p><div></div></div>
-            <div class="player2">
-                <p id="player__name--two">Player 2</p>
-                <p id="player__score--two">Score: 0</p>
-            </div> 
-        </div>
-        <div id="container-btn" class="btn-container">
-         <button id="btn" class="btn-newgame">New game</button>
-         <a href="saved-games.html" class="btn-newgame" type="button">Load game</a>
-         <div class="save-container">
-            <button id="save" class="btn-newgame">Save game</button>
-            <button id="load" class="btn-newgame">Last game</button> 
-         </div>
-        </div>
-      </div>
-    </main>
 
-    <footer class="footer">
-        <p class="footer__text"><a class="footer__text--link" href="how-to-play.html">How to play Checkers</a> - Juliana Bearzi - 2021 -</p>
-        <a href="https://github.com/julianabearzi/my-checkers-game" target="_blank"><img src="./img/github.png" alt="github"></a>
-    </footer>
-</div>
-<script src="js/app.js"></script>
+<body>
+    <div class="wrapper">
+        <header id="main-header">
+            <div class="header-container">
+                <div class="logo-header">
+                    <img src="./img/checkers.png" class="logo-header__image" alt="logo">
+                    <h1><a class="logo-header__text" href="index.html">
+                            CHECKERS
+                        </a></h1>
+                </div>
+                <div class="navigation">
+                    <a href="#" class="navigation__link">Sign Up</a>
+                    <a href="#" class="navigation__link">Login</a>
+                    <a href="contact.html" class="navigation__link">Contact</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container-game">
+                <div id="message-box" class="message-box__hidden">
+                    <p id="message"></p>
+                    <div id="player1" class="player-input">
+                        <h3>P1</h3>
+                        <input id="p1-name" type="text" maxlength="10">
+                    </div>
+
+                    <div id="player2" class="player-input">
+                        <h3>P2</h3>
+                        <input id="p2-name" type="text" maxlength="10">
+                    </div>
+                    <h4 id="incomplete-fields" class="incomplete-fields__hidden">Incomplete fields</h4>
+                    <button id="btn-ok" class="btn-display">OK</button>
+                    <button id="btn-player" class="btn-hidden">OK</button>
+                    <button id="btn-draw" class="btn-hidden">OK</button>
+                </div>
+                <table id="checkers"></table>
+                <div class="ribbon"></div>
+                <div class="players">
+                    <div class="player">
+                        <p id="player__name">Player 1</p>
+                        <p id="player__score">Score: 0</p>
+                    </div>
+                    <div id="turn" class="turn__piece">
+                        <p></p>
+                        <p id="turn-player"></p>
+                        <div></div>
+                    </div>
+                    <div class="player2">
+                        <p id="player__name--two">Player 2</p>
+                        <p id="player__score--two">Score: 0</p>
+                    </div>
+                </div>
+                <div id="container-btn" class="btn-container">
+                    <button id="btn" class="btn-newgame">New game</button>
+                    <a href="saved-games.html" class="btn-newgame" type="button">Load game</a>
+                    <div class="save-container">
+                        <button id="save" class="btn-newgame">Save game</button>
+                        <button id="load" class="btn-newgame">Last game</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__text"><a class="footer__text--link" href="how-to-play.html">How to play Checkers</a> -
+                Juliana Bearzi - 2021 -</p>
+            <a href="https://github.com/julianabearzi/my-checkers-game" target="_blank"><img src="./img/github.png"
+                    alt="github"></a>
+        </footer>
+    </div>
+    <script src="js/board.js"></script>
+    <script src="js/players.js"></script>
+    <script src="js/pieces.js"></script>
+    <script src="js/game.js"></script>
 </body>
+
 </html>

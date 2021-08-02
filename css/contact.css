@@ -87,15 +87,4 @@
 .form.stop {
     pointer-events: none;
 }
-@media (max-width: 480px) {
-    .field__label, .field__textbox {
-     font-size: 0.8rem;
-    }
-    #message-box__form {
-        top: 60%;
-        margin-left: 1.2rem;
-    }
-    .field .btn-send {
-        margin-left: 25%;
-    }
-}
+

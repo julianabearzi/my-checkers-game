@@ -1,0 +1,23 @@
+.rules {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+  .rules .rules__title {
+      font-size: 2rem;
+     border-bottom: 1px solid var(--lightbrown);
+     color: var(--lightbrown);
+    text-align: center;
+  }
+  .rules h3 {
+      text-align: center;
+      color: var(--gold);
+      border-bottom: 1px solid var(--lightbrown);
+      font-size: 1.5rem;
+  }
+  .rules .rules__list {
+      font-size: 1rem;
+      color: var(--white);
+      line-height: 2;
+  }
