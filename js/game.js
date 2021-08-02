@@ -2,6 +2,7 @@
 var savedGames = [];
 var selectedGame = null;
 var loadedGame = null;
+var arrayLastGame = null;
 
 document.getElementById('load').addEventListener('click', LoadLastGame);
 document.getElementById('btn').addEventListener('click', NewGame);
@@ -115,7 +116,7 @@ function SaveGame() {
 
 function LoadLastGame() {
   try {
-    var arrayLastGame = JSON.parse(localStorage.getItem('game'));
+    arrayLastGame = JSON.parse(localStorage.getItem('game'));
     var lastGame = arrayLastGame[arrayLastGame.length - 1];
     turn = lastGame.turn;
     blackScore = lastGame.blackScore;
@@ -130,6 +131,7 @@ function LoadLastGame() {
     document.getElementById('btn-ok').className = 'btn-display';
     document.getElementById('btn-draw').className = 'btn-hidden';
     blackScore == 12 || brownScore == 12 ? checkers.className = 'stop' : checkers.className = ' ';
+    pieceAlreadySelected = null;
   }
   catch (e) {
     DisplayMessage('Error. Save a game and try again');

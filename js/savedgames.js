@@ -1,5 +1,5 @@
 var savedGamesList = document.getElementById('list');
-var loadBtn =  document.getElementsByClassName('load-game');
+var loadBtn = document.getElementsByClassName('load-game');
 var scoreBtn = document.getElementById('order-score');
 var dateBtn = document.getElementById('order-date');
 var selectedGame = null;
@@ -8,10 +8,10 @@ scoreBtn.addEventListener('click', GamesSortedByScore);
 dateBtn.addEventListener('click', GamesSortedByDate);
 
 function LoadGame(arraySavedGame) {
-   if(arraySavedGame) {
+   if (arraySavedGame) {
       for (var i = 0; i < arraySavedGame.length; i++) {
          loadBtn[i].addEventListener('click', function (e) {
-            i = JSON.parse(e.target.id);
+            i = parseInt(e.target.id);
             selectedGame = arraySavedGame[i];
             localStorage.setItem('selectedGame', JSON.stringify(selectedGame));
             localStorage.setItem('loadedGame', JSON.stringify(true));
@@ -21,17 +21,17 @@ function LoadGame(arraySavedGame) {
    }
 }
 
-function OrderByScore (score, so, arrScore) {
+function OrderByScore(score, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
-     return (a[score] - b[score]) * so;
+      return (a[score] - b[score]) * so;
    });
 }
 
-function OrderByScores (scoreBlack, scoreBrown, so, arrScore) {
+function OrderByScores(scoreBlack, scoreBrown, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
-   return (a[scoreBrown] - b[scoreBlack]) * so;
+      return (a[scoreBrown] - b[scoreBlack]) * so;
    });
 }
 
@@ -71,7 +71,7 @@ function RenderList(arrayList) {
             element += '<div class="winner"> 🏆 ' + arrayList[i].p2 + ' WINS </div>';
          }
          element += '</div>';
-         element += '<button id="'+i+'" class="load-game">Load</button>';
+         element += '<button id="' + i + '" class="load-game">Load</button>';
          element += '</li>';
          savedGamesList.innerHTML = element;
       }

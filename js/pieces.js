@@ -106,7 +106,8 @@ function checkAttack() {
     }
 
     if (turn == 2) {
-        if ((moveDownLeft.innerHTML == pieceBrown)
+        if (moveDownLeft.id != undefined
+            && (board[parseInt(moveDownLeft.id.substring(0, 1))][parseInt(moveDownLeft.id.substring(1, 2))] == 1)
             && (moveDownLeftMult.innerHTML == '')) {
             if (moveDownRight.id != undefined) {
                 moveDownRight.classList.remove('move-here');
@@ -117,7 +118,8 @@ function checkAttack() {
             moveDownLeftMult.classList.add('move-here');
             moveDownLeftMult.classList.remove('cell-dark');
         }
-        if ((moveDownRight.innerHTML == pieceBrown)
+        if (moveDownRight.id != undefined
+            && (board[parseInt(moveDownRight.id.substring(0, 1))][parseInt(moveDownRight.id.substring(1, 2))] == 1)
             && (moveDownRightMult.innerHTML == '')) {
             if (moveDownLeft.id != undefined) {
                 moveDownLeft.classList.remove('move-here');
@@ -128,9 +130,11 @@ function checkAttack() {
             moveDownRightMult.classList.add('move-here');
             moveDownRightMult.classList.remove('cell-dark');
         }
-        if (((moveDownLeft.innerHTML == pieceBrown)
-            && (moveDownLeftMult.innerHTML == ''))
-            || ((moveDownRight.innerHTML == pieceBrown)
+        if (moveDownLeft.id != undefined
+            && ((board[parseInt(moveDownLeft.id.substring(0, 1))][parseInt(moveDownLeft.id.substring(1, 2))] == 1)
+                && (moveDownLeftMult.innerHTML == ''))
+            || moveDownRight.id != undefined
+            && ((board[parseInt(moveDownRight.id.substring(0, 1))][parseInt(moveDownRight.id.substring(1, 2))] == 1)
                 && (moveDownRightMult.innerHTML == ''))) {
             mustAttack = true;
         }
@@ -140,7 +144,8 @@ function checkAttack() {
     }
 
     else if (turn == 1) {
-        if ((moveUpLeft.innerHTML == pieceBlack)
+        if (moveUpLeft.id != undefined
+            && (board[parseInt(moveUpLeft.id.substring(0, 1))][parseInt(moveUpLeft.id.substring(1, 2))] == 2)
             && (moveUpLeftMult.innerHTML == '')) {
             if (moveUpRight.id != undefined) {
                 moveUpRight.classList.remove('move-here');
@@ -151,8 +156,8 @@ function checkAttack() {
             moveUpLeftMult.classList.add('move-here');
             moveUpLeftMult.classList.remove('cell-dark');
         }
-
-        if ((moveUpRight.innerHTML == pieceBlack)
+        if (moveUpRight.id != undefined
+            && (board[parseInt(moveUpRight.id.substring(0, 1))][parseInt(moveUpRight.id.substring(1, 2))] == 2)
             && (moveUpRightMult.innerHTML == '')) {
             if (moveUpLeft.id != undefined) {
                 moveUpLeft.classList.remove('move-here');
@@ -163,9 +168,11 @@ function checkAttack() {
             moveUpRightMult.classList.add('move-here');
             moveUpRightMult.classList.remove('cell-dark');
         }
-        if ((moveUpLeft.innerHTML == pieceBlack
-            && moveUpLeftMult.innerHTML == '')
-            || (moveUpRight.innerHTML == pieceBlack)
+        if (moveUpLeft.id != undefined
+            && (board[parseInt(moveUpLeft.id.substring(0, 1))][parseInt(moveUpLeft.id.substring(1, 2))] == 2
+                && moveUpLeftMult.innerHTML == '')
+            || moveUpRight.id != undefined
+            && (board[parseInt(moveUpRight.id.substring(0, 1))][parseInt(moveUpRight.id.substring(1, 2))] == 2)
             && (moveUpRightMult.innerHTML == '')) {
             mustAttack = true;
         }
@@ -176,6 +183,7 @@ function checkAttack() {
 }
 
 function PieceClickHandler(e) {
+    console.log(board);
     var boardCopy = JSON.stringify(board);
     if (turn == 1) {
         if (!pieceAlreadySelected && e.currentTarget.firstElementChild) {
@@ -229,8 +237,6 @@ function PieceClickHandler(e) {
         }
         else if (pieceAlreadySelected && mustAttack) {
             position = e.currentTarget;
-            board[(position.id).substring(0, 1)][(position.id).substring(1, 2)] = 1;
-            board[(cell.id).substring(0, 1)][(cell.id).substring(1, 2)] = null;
             if ((moveUpLeftMult.id % 10) <= 7) {
                 moveUpLeftMult.classList.remove('move-here');
                 moveUpLeftMult.classList.add('cell-dark');
@@ -239,8 +245,10 @@ function PieceClickHandler(e) {
                 moveUpRightMult.classList.remove('move-here');
                 moveUpRightMult.classList.add('cell-dark');
             }
-            if (position.id == moveUpLeftMult.id && moveUpLeft.innerHTML == pieceBlack && moveUpLeftMult.innerHTML == '') {
+            if (position.id == moveUpLeftMult.id && board[parseInt(moveUpLeft.id.substring(0, 1))][parseInt(moveUpLeft.id.substring(1, 2))] == 2 && moveUpLeftMult.innerHTML == '') {
                 board[(moveUpLeft.id).substring(0, 1)][(moveUpLeft.id).substring(1, 2)] = null;
+                board[(position.id).substring(0, 1)][(position.id).substring(1, 2)] = 1;
+                board[(cell.id).substring(0, 1)][(cell.id).substring(1, 2)] = null;
                 cell.innerHTML = '';
                 position.innerHTML = pieceBrown;
                 moveUpLeft.innerHTML = '';
@@ -254,8 +262,10 @@ function PieceClickHandler(e) {
                 turn = 2;
                 TurnPiece(turn);
             }
-            else if (position.id == moveUpRightMult.id && moveUpRight.innerHTML == pieceBlack && moveUpRightMult.innerHTML == '') {
+            else if (position.id == moveUpRightMult.id && board[parseInt(moveUpRight.id.substring(0, 1))][parseInt(moveUpRight.id.substring(1, 2))] == 2 && moveUpRightMult.innerHTML == '') {
                 board[(moveUpRight.id).substring(0, 1)][(moveUpRight.id).substring(1, 2)] = null;
+                board[(position.id).substring(0, 1)][(position.id).substring(1, 2)] = 1;
+                board[(cell.id).substring(0, 1)][(cell.id).substring(1, 2)] = null;
                 cell.innerHTML = '';
                 position.innerHTML = pieceBrown;
                 moveUpRight.innerHTML = '';
@@ -324,8 +334,6 @@ function PieceClickHandler(e) {
         }
         else if (pieceAlreadySelected && mustAttack) {
             position = e.currentTarget;
-            board[(position.id).substring(0, 1)][(position.id).substring(1, 2)] = 2;
-            board[(cell.id).substring(0, 1)][(cell.id).substring(1, 2)] = null;
             if ((moveDownLeftMult.id % 10) <= 7) {
                 moveDownLeftMult.classList.remove('move-here');
                 moveDownLeftMult.classList.add('cell-dark');
@@ -335,9 +343,11 @@ function PieceClickHandler(e) {
                 moveDownRightMult.classList.add('cell-dark');
             }
             if (position.id == moveDownLeftMult.id
-                && moveDownLeft.innerHTML == pieceBrown
+                && board[parseInt(moveDownLeft.id.substring(0, 1))][parseInt(moveDownLeft.id.substring(1, 2))] == 1
                 && moveDownLeftMult.innerHTML == '') {
                 board[(moveDownLeft.id).substring(0, 1)][(moveDownLeft.id).substring(1, 2)] = null;
+                board[(position.id).substring(0, 1)][(position.id).substring(1, 2)] = 2;
+                board[(cell.id).substring(0, 1)][(cell.id).substring(1, 2)] = null;
                 cell.innerHTML = '';
                 position.innerHTML = pieceBlack;
                 moveDownLeft.innerHTML = '';
@@ -352,9 +362,11 @@ function PieceClickHandler(e) {
                 TurnPiece(turn);
             }
             else if (position.id == moveDownRightMult.id
-                && moveDownRight.innerHTML == pieceBrown
+                && board[parseInt(moveDownRight.id.substring(0, 1))][parseInt(moveDownRight.id.substring(1, 2))] == 1
                 && moveDownRightMult.innerHTML == '') {
                 board[(moveDownRight.id).substring(0, 1)][(moveDownRight.id).substring(1, 2)] = null;
+                board[(position.id).substring(0, 1)][(position.id).substring(1, 2)] = 2;
+                board[(cell.id).substring(0, 1)][(cell.id).substring(1, 2)] = null;
                 cell.innerHTML = '';
                 position.innerHTML = pieceBlack;
                 moveDownRight.innerHTML = '';
