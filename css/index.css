@@ -128,7 +128,7 @@ td {
     background-color:rgb(134, 40, 40);
     border: 3px solid var(--black);
     border-radius: 10px;
-    top: 35%;
+    top: 40%;
     text-align: center;
     pointer-events: auto;
     z-index: 1;

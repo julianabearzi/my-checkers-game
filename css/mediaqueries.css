@@ -58,4 +58,14 @@
     .field .btn-send {
         margin-left: 25%;
     }
+    #message-box {
+        width: 60vw;
+        top: 40%;
+    }
+    #message-box #message {
+        font-size: 1.2rem;
+    }
+    #message-box #btn-ok, #message-box .btn-display  {
+        font-size: 1.2rem;
+    }
 }
