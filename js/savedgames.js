@@ -21,6 +21,17 @@ function LoadGame(arraySavedGame) {
    }
 }
 
+function OrderDate(arrDate) {
+   for (var i = 0; i <= 2; i++) {
+      arrDate.sort(function (a, b) {
+         a = a.date.split("/");
+         b = b.date.split("/");
+
+         return a[i] - b[i];
+      });
+   }
+}
+
 function OrderByScore(score, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
@@ -46,6 +57,7 @@ function GamesSortedByScore() {
 function GamesSortedByDate() {
    var arrayGames = JSON.parse(localStorage.getItem('game'));
    if (arrayGames) {
+      OrderDate(arrayGames);
       arrayGames.reverse();
    }
    RenderList(arrayGames);

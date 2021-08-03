@@ -183,7 +183,6 @@ function checkAttack() {
 }
 
 function PieceClickHandler(e) {
-    console.log(board);
     var boardCopy = JSON.stringify(board);
     if (turn == 1) {
         if (!pieceAlreadySelected && e.currentTarget.firstElementChild) {
