@@ -34,30 +34,23 @@ function OrderDate(arrDate) {
    }
 }
 
-function OrderByScoreBlack(scoreBlack, so, arrScore) {
+function OrderByScore(score, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
-      return (a[scoreBlack] - b[scoreBlack]) * so;
-   });
-}
-
-function OrderByScoreBrown(scoreBrown, so, arrScore) {
-   if (so != -1 && so != 1) so = 1;
-   arrScore.sort(function (a, b) {
-      return (a[scoreBrown] - b[scoreBrown]) * so;
+      return (a[score] - b[score]) * so;
    });
 }
 
 function GamesSortedByScoreBlack() {
    var arrayScore = JSON.parse(localStorage.getItem('game'));
-   OrderByScoreBlack('blackScore', -1, arrayScore);
+   OrderByScore('blackScore', -1, arrayScore);
    RenderList(arrayScore);
    LoadGame(arrayScore);
 }
 
 function GamesSortedByScoreBrown() {
    var arrayScore = JSON.parse(localStorage.getItem('game'));
-   OrderByScoreBlack('brownScore', -1, arrayScore);
+   OrderByScore('brownScore', -1, arrayScore);
    RenderList(arrayScore);
    LoadGame(arrayScore);
 }
