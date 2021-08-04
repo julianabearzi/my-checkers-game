@@ -1,10 +1,12 @@
 var savedGamesList = document.getElementById('list');
 var loadBtn = document.getElementsByClassName('load-game');
-var scoreBtn = document.getElementById('order-score');
+var scoreBlackBtn = document.getElementById('order-score__black');
+var scoreBrownBtn = document.getElementById('order-score__brown');
 var dateBtn = document.getElementById('order-date');
 var selectedGame = null;
 
-scoreBtn.addEventListener('click', GamesSortedByScore);
+scoreBlackBtn.addEventListener('click', GamesSortedByScoreBlack);
+scoreBrownBtn.addEventListener('click', GamesSortedByScoreBrown);
 dateBtn.addEventListener('click', GamesSortedByDate);
 
 function LoadGame(arraySavedGame) {
@@ -32,24 +34,30 @@ function OrderDate(arrDate) {
    }
 }
 
-function OrderByScore(score, so, arrScore) {
+function OrderByScoreBlack(scoreBlack, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
-      return (a[score] - b[score]) * so;
+      return (a[scoreBlack] - b[scoreBlack]) * so;
    });
 }
 
-function OrderByScores(scoreBlack, scoreBrown, so, arrScore) {
+function OrderByScoreBrown(scoreBrown, so, arrScore) {
    if (so != -1 && so != 1) so = 1;
    arrScore.sort(function (a, b) {
-      return (a[scoreBrown] - b[scoreBlack]) * so;
+      return (a[scoreBrown] - b[scoreBrown]) * so;
    });
 }
 
-function GamesSortedByScore() {
+function GamesSortedByScoreBlack() {
    var arrayScore = JSON.parse(localStorage.getItem('game'));
-   OrderByScore('blackScore', -1, arrayScore);
-   OrderByScores('blackScore', 'brownScore', -1, arrayScore);
+   OrderByScoreBlack('blackScore', -1, arrayScore);
+   RenderList(arrayScore);
+   LoadGame(arrayScore);
+}
+
+function GamesSortedByScoreBrown() {
+   var arrayScore = JSON.parse(localStorage.getItem('game'));
+   OrderByScoreBlack('brownScore', -1, arrayScore);
    RenderList(arrayScore);
    LoadGame(arrayScore);
 }
