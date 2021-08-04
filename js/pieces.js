@@ -182,6 +182,7 @@ function checkAttack() {
     }
 }
 
+//Game pieces controller
 function PieceClickHandler(e) {
     var boardCopy = JSON.stringify(board);
     if (turn == 1) {

@@ -46,6 +46,7 @@ function RenderBoard() {
     checkers.innerHTML = boardMatrix;
 }
 
+// Renders board when start a new game or load a saved game
 function BoardInPlay(turnLast, lastBlackScore, lastBrownScore) {
     turn = turnLast;
     blackScore = lastBlackScore;

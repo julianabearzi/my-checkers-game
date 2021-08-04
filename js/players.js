@@ -25,6 +25,9 @@ function UpdatePlayerScore(blackScore, brownScore) {
     document.getElementById('player__score--two').textContent = 'Score: ' + blackScore;
 }
 
+// Check the pieces of each player and compare the current board with the previous one, to know if there was a piece movement.
+// If no piece is captured on the next move, the move counter increases.
+// If attacked, the counter is reset.
 function CheckForADraw(boardCopy) {
     if (boardCopy != JSON.stringify(board) && brownScore >= 9 && blackScore >= 9) {
         mustAttack ? movCounter = 0 : movCounter++;

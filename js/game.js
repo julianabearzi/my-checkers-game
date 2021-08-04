@@ -1,4 +1,3 @@
-
 var savedGames = [];
 var selectedGame = null;
 var loadedGame = null;
@@ -114,6 +113,7 @@ function SaveGame() {
   }
 }
 
+//Gets the object in the last position of the array of saved games
 function LoadLastGame() {
   try {
     arrayLastGame = JSON.parse(localStorage.getItem('game'));
@@ -138,6 +138,7 @@ function LoadLastGame() {
   }
 }
 
+//Gets the previously selected item on the saved games page, which is inserted into selectedGame and load game 
 function LoadSelectedGame() {
   selectedGame = JSON.parse(localStorage.getItem('selectedGame'));
   turn = selectedGame.turn;
